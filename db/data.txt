@@ -1,0 +1,590 @@
+Violet: #8A2BE2
+Dark Red: #8B0000
+Ruby Red: #9B111E
+Crimson: #DC143C
+Matte Red: #B03060
+Soft Red: #E57373
+Cherry Red: #D2042D
+Crimson Red: #990000
+Classic Red: #BF0A30
+Bright Red: #FF0000
+Shimmer Red: #C41E3A
+Vermilion: #E34234
+Mahogany Red: #C04000
+Scarlet Crush: #FF2400
+Plum: #DDA0DD
+Deep Plum: #673147
+Anna: #B48491
+Audrey: #8B475D
+Vivien: #803E52
+Rosy Rouge: #D991A3
+Fuchsia Crush: #C154C1
+Light Pink: #FFB6C1
+Medium Pink: #FF69B4
+Dark Pink: #FF1493
+Peachy Pink: #FF9A8A
+Coral: #FF7F50
+Soft Coral: #F88379
+Bright Coral: #FF6F61
+Beige: #F5F5DC
+Warm Nude: #D2B48C
+Toffee Cream: #D2B48C
+Margaret: #397F70
+Brigitte: #D9A59A
+Mauve: #E0B0FF
+Soft Mauve: #D8BFD8
+Fuchsia: #FF00FF
+Lavender: #D3D3FF
+Purple: #800080
+Peach: #FFD3AC
+Rose: #FF007F
+Lime: #00FF00
+Cinnamon Spice: #D2691E
+Deep Berry: #702963
+Bright Cherry: #FF5A6C
+Cherry: #DE3163
+
+Brands
+name: 'NARS', image_url: './images/nars-logo.png'
+name: 'AVON', image_url: './images/avon-logo.jpg'
+name: 'YSL', image_url: './images/ysl-logo.jpg'
+name: 'MAC', image_url: './images/mac-logo.png'
+name: 'Maybelline', image_url: './images/maybelline-logo.jpg'
+name: 'DIOR', image_url: './images/dior-logo.jpg'
+
+Categories
+name: Matte
+name: Satin
+name: Lip Gloss
+name: Lip Stain
+name: Lip Tint
+name: Creamy
+name: Sheer
+name: Lip Crayons
+
+Lipsticks
+brand_id: 1, 
+category_id: 1, 
+name: NARS Velvet Touch Lipstick,
+description: A luxurious matte lipstick that offers a rich, velvety finish, perfect for long-lasting wear.,
+price: 400.00,
+image_url: ./images/matte/NARS Velvet Touch.jpg
+
+brand_id: 1, 
+category_id: 1, 
+name: NARS Urban Chic,
+description: A bold red lipstick with a matte finish, perfect for making statement.,
+price: 300.00,
+image_url: ./images/matte/NARS Urban Chic.jpg
+
+brand_id: 1, 
+category_id: 7, 
+name: NARS Ultra Matte Lipstick,
+description: A luxurious matte lipstick that offers a rich, velvety finish, perfect for long-lasting wear.,
+price: 550.00,
+image_url: ./images/matte//NARS Ultra Matte Lipstick.jpg
+
+brand_id: 1, 
+category_id: 7, 
+name: Margaret,
+description: Margaret is a classic, deep red shade that exudes elegance and sophistication, offering a rich, bold finish perfect for special occasions or a chic everyday look.,
+price: 1,900.00,
+image_url: ./images/collections/Margaret.jpg
+
+brand_id: 1, 
+category_id: 7, 
+name: Anna,
+description: Anna is a bright, playful pink hue that adds a fun pop of color to any look. It’s vibrant and lively, making it ideal for those who love a bit of flair.,
+price: 1,900.00,
+image_url: ./images/collections/Anna.jpg
+
+brand_id: 1, 
+category_id: 7, 
+name: Audrey,
+description: Audrey is a sophisticated mauve shade that strikes the perfect balance between bold and understated, ideal for daily wear or adding a polished finish to any look.,
+price: 1,900.00,
+image_url: ./images/collections/Audrey.jpg
+
+brand_id: 1, 
+category_id: 7, 
+name: Brigitte,
+description: Brigitte is a deep, intense berry shade with a matte finish, making it a powerful statement color that exudes confidence and boldness.,
+price: 1,900.00,
+image_url: ./images/collections/Brigitte.jpg
+
+brand_id: 1, 
+category_id: 7, 
+name: Vivien,
+description: Vivien is a soft pink nude with a hint of warmth, offering a natural, subtle flush that enhances the lips with a delicate, feminine touch.,
+price: 1,900.00,
+image_url: ./images/collections/Vivien.jpg
+
+brand_id: 2, 
+category_id: 6, 
+name: AVON Creamy Indulgence Lipstick,
+description: A rich, velvety lipstick with a smooth application and long-lasting creamy finish for an indulgent touch.,
+price: 400.00,
+image_url: ./images/creamy/AVON Creamy Indulgence.jpg
+
+brand_id: 2, 
+category_id: 6, 
+name: AVON Divine Comfort Lipstick,
+description: Luxurious and moisturizing, this lipstick glides on effortlessly, providing soft, all-day comfort.,
+price: 350.00,
+image_url: ./images/creamy/AVON Divine Comfort.jpg
+
+brand_id: 2, 
+category_id: 6, 
+name: AVON Dreamy Cream Lipstick,
+description: Experience the dreamy, silky texture that melts into your lips, giving you an ethereal and natural glow.,
+price: 200.00,
+image_url: ./images/creamy/AVON Dreamy Cream.jpg
+
+brand_id: 2, 
+category_id: 6, 
+name: AVON Dreamy Smooth Lipstick,
+description:  A perfectly smooth formula that enhances your lips with vibrant color and a soft, comfortable feel.,
+price: 300.00,
+image_url: ./images/creamy/AVON Dreamy Smooth.jpg
+
+brand_id: 2, 
+category_id: 2, 
+name: AVON Alluring Shine Lipstick,
+description: This lipstick combines vivid color with a glossy shine, adding a touch of allure to any look.,
+price: 500.00,
+image_url: ./images/Satin/Avon Alluring Shine.jpg
+
+brand_id: 3, 
+category_id: 1, 
+name: YSL Bold Ambition Lipstick,
+description: Make a statement with this vibrant, bold lipstick that exudes confidence and sophistication.,
+price: 500.00,
+image_url: ./images/matte/YSL Bold Ambition.jpg
+
+brand_id: 3, 
+category_id: 1, 
+name: YSL Coral Kiss Lipstick,
+description: A fresh, coral shade that adds a playful touch to any look with a kiss of bright color.,
+price: 500.00,
+image_url: ./images/matte/YSL Coral Kiss.jpg
+
+brand_id: 3, 
+category_id: 7, 
+name: YSL Natural Glow Lipstick,
+description: A creamy lipstick that enhances your lips' natural beauty with a soft, glowing finish.,
+price: 100.00,
+image_url: ./images/sheer/YSL Natural Glow.jpg
+
+brand_id: 3, 
+category_id: 2, 
+name: Rouge Pur Couture The Bold,
+description: An intense, bold lipstick that delivers vibrant color with a satin finish, offering full coverage and all-day wear for a striking, confident look.,
+price: 1,000.00,
+image_url: ./images/collections/Rouge Pur Couture The Bold.jpg
+
+brand_id: 3, 
+category_id: 1, 
+name: Rouge Pur Couture Night Edition,
+description: A luxurious lipstick designed for evening glamour, featuring rich, deep shades that add a sophisticated touch to your lips with a smooth, long-lasting finish.,
+price: 1,500.00,
+image_url: ./images/collections/Rouge Pur Couture Night Edition.jpg
+
+brand_id: 3, 
+category_id: 7, 
+name: Ruby Red Lipstick,
+description: A captivating, classic red hue that exudes elegance and allure, providing a bold, statement-making look with a creamy, comfortable texture.,
+price: 1,499.00,
+image_url: ./images/collections/Rouge Pur Couture Satin.jpg
+
+brand_id: 3, 
+category_id: 2, 
+name: Rouge Sur Mesure,
+description: A customizable lipstick that allows you to create the perfect shade, blending effortlessly with your lips for a personalized, flawless finish.,
+price: 1,900.00,
+image_url: ./images/collections/Rouge Sur Mesure.jpg
+
+brand_id: 3, 
+category_id: 1, 
+name: Tatouage Couture,
+description: A tattoo-inspired liquid lipstick that delivers a lightweight, matte finish with high-impact color, ensuring a bold, smudge-proof look that lasts all day.,
+price: 1,900.00,
+image_url: ./images/collections/Tatouage Couture.jpg
+
+brand_id: 4, 
+category_id: 1, 
+name: MAC Lipstick,
+description: The classic go-to lipstick with a rich, pigmented formula that provides lasting color in every swipe.,
+price: 600.00,
+image_url: ./images/matte/Mac Lipstick.jpg
+
+brand_id: 4, 
+category_id: 1, 
+name: MAC Noir Romance Lipstick,
+description: A deep, sultry shade that exudes elegance and adds a touch of mystery to any look.,
+price: 700.00,
+image_url: ./images/matte/Mac Noir Romance.jpg
+
+brand_id: 4, 
+category_id: 7, 
+name: MAC Flirty Sheen Lipstick,
+description: A playful lipstick with a hint of sheen, perfect for adding a flirty touch to your smile.,
+price: 500.00,
+image_url: ./images/sheer/Mac Flirty Sheen.jpg
+
+brand_id: 4, 
+category_id: 7, 
+name: MAC Sheer Whisper Lipstick,
+description:  A soft, sheer lipstick that adds a delicate hint of color for a naturally beautiful look.,
+price: 400.00,
+image_url: ./images/sheer/MAC Sheer Whisper.jpg
+
+brand_id: 4, 
+category_id: 1, 
+name: MAC Chic Statement Lipstick,
+description: Make a chic, bold statement with this sophisticated lipstick that’s perfect for any occasion.,
+price: 400.00,
+image_url: ./images/matte/MAC Chic Statement.jpg
+
+brand_id: 5, 
+category_id: 1, 
+name: Maybelline Classic Charm Lipstick,
+description:  A timeless lipstick that exudes classic charm with a smooth, creamy finish and vibrant color.,
+price: 200.00,
+image_url: ./images/matte/Maybelline Classic Charm.jpg
+
+brand_id: 5, 
+category_id: 1, 
+name: Maybelline Timeless Temptation Lipstick,
+description: Indulge in this lipstick's rich, seductive shade that never goes out of style.,
+price: 200.00,
+image_url: ./images/matte/Maybelline Timeless Temptation.jpg
+
+brand_id: 5, 
+category_id: 7, 
+name: Maybelline Barely There Bliss Lipstick,
+description:  A subtle, barely-there shade for a soft, blissful touch that enhances natural beauty.,
+price: 400.00,
+image_url: ./images/sheer/Maybelline Barely There Bliss.jpg
+
+brand_id: 5, 
+category_id: 7, 
+name: Maybelline Delicate Dream Lipstick,
+description: A light, dreamy formula that adds a delicate tint to your lips for an effortless look.,
+price: 300.00,
+image_url: ./images/sheer/Maybelline Delicate Dream.jpg
+
+brand_id: 5, 
+category_id: 2, 
+name: Maybelline Crème Kiss Lipstick,
+description: Creamy and smooth, this lipstick delivers a kiss of color with a luscious finish.,
+price: 300.00,
+image_url: ./images/Satin/Maybelline Crème Kiss.jpg
+
+brand_id: 5, 
+category_id: 2, 
+name: Maybelline Crème Kiss Lipstick,
+description: Creamy and smooth, this lipstick delivers a kiss of color with a luscious finish.,
+price: 300.00,
+image_url: ./images/Satin/Maybelline Crème Kiss.jpg
+
+brand_id: 6, 
+category_id: 8, 
+name: Dior Colorful Charm,
+description: A vibrant lipstick that adds a charming burst of color, perfect for a lively, unforgettable look.,
+price: 500.00,
+image_url: ./images/lipcrayon/Dior Colorful Charm.jpg
+
+brand_id: 6, 
+category_id: 8, 
+name: DIOR Crayon Crush,
+description: This chic crayon lipstick delivers bold color with easy application, ideal for creating a stylish statement.,
+price: 200.00,
+image_url: ./images/lipcrayon/DIOR Crayon Crush.jpg
+
+brand_id: 6, 
+category_id: 6, 
+name: DIOR Creamy Delight Lipstick,
+description:  Indulge in a creamy, delightful formula that provides rich color and smooth application.,
+price: 200.00,
+image_url: ./images/creamy/DIOR Creamy Delight.jpg
+
+brand_id: 6, 
+category_id: 1, 
+name: Rouge Dior Forever Liquid,
+description: A long-lasting liquid lipstick that offers vibrant, bold color with a comfortable matte finish, delivering up to 16 hours of wear without fading or smudging.,
+price: 1,900.00,
+image_url: ./images/collections/Rouge Dior Forever Liquid.jpg
+
+brand_id: 6, 
+category_id: 1, 
+name: Rouge Dior Couture Color,
+description: A luxurious lipstick that provides intense, couture-inspired color with a satin finish, ensuring full coverage and lasting hydration for a flawless, elegant look.,
+price: 1,900.00,
+image_url: ./images/collections/Rouge Dior Couture Color.jpg
+
+brand_id: 6, 
+category_id: 1, 
+name: Rouge Dior Ultra Care,
+description: A nourishing lipstick that combines bold color with a hydrating formula, leaving your lips soft, smooth, and comfortable while delivering a chic, long-lasting finish.,
+price: 1,900.00,
+image_url: ./images/collections/Rouge Dior Ultra Care.jpg
+
+brand_id: 6, 
+category_id: 7, 
+name: Rouge Dior Nude Look,
+description: A sophisticated nude lipstick that enhances your natural lip color with a subtle, silky finish, perfect for an effortlessly elegant look every day.,
+price: 1,900.00,
+image_url: ./images/collections/Rouge Dior Nude Look.jpg
+
+brand_id: 6, 
+category_id: 1, 
+name: Rouge Dior Metallics,
+description: A statement-making lipstick with a shimmering metallic finish, offering bold color with a reflective shine that adds an edgy, high-fashion touch to your lips.,
+price: 1,900.00,
+image_url: ./images/collections/Rouge Dior Metallics.jpg
+
+
+lipstick_colors
+--------------------
+
+lipstick_id: 1,
+color_id: 1
+
+lipstick_id: 1,
+color_id: 2
+
+lipstick_id: 2,
+color_id: 3
+
+lipstick_id: 2,
+color_id: 4
+
+lipstick_id: 3,
+color_id: 15
+
+lipstick_id: 3,
+color_id: 16
+
+lipstick_id: 4,
+color_id: 32
+
+lipstick_id: 5,
+color_id: 17
+
+lipstick_id: 6,
+color_id: 18
+
+lipstick_id: 7,
+color_id: 33
+
+lipstick_id: 8,
+color_id: 19
+
+-----------------------
+
+lipstick_id: 9,
+color_id: 20
+
+lipstick_id: 9,
+color_id: 21
+
+lipstick_id: 9,
+color_id: 31
+
+lipstick_id: 10,
+color_id: 46
+
+lipstick_id: 10,
+color_id: 47
+
+lipstick_id: 11,
+color_id: 7
+
+lipstick_id: 11,
+color_id: 8
+
+lipstick_id: 12,
+color_id: 3
+
+lipstick_id: 12,
+color_id: 4
+
+lipstick_id: 13,
+color_id: 5
+
+lipstick_id: 13,
+color_id: 6
+
+--------------------------
+
+lipstick_id: 14,
+color_id: 5
+
+lipstick_id: 14,
+color_id:6
+
+lipstick_id: 15,
+color_id: 26
+
+lipstick_id: 15,
+color_id:27
+
+lipstick_id: 16,
+color_id: 29
+
+lipstick_id: 16,
+color_id: 30
+
+lipstick_id: 17,
+color_id: 9
+
+lipstick_id: 17,
+color_id: 2
+
+lipstick_id: 18,
+color_id: 7
+
+lipstick_id: 18,
+color_id: 8
+
+lipstick_id: 19,
+color_id: 3
+
+lipstick_id: 19,
+color_id: 4
+
+lipstick_id: 20,
+color_id: 24
+
+lipstick_id: 20,
+color_id: 6
+
+lipstick_id: 21,
+color_id: 11
+
+lipstick_id: 21,
+color_id: 10
+
+---------------------------
+
+lipstick_id: 22,
+color_id: 45
+
+lipstick_id: 22,
+color_id: 44
+
+lipstick_id: 23,
+color_id: 34
+
+lipstick_id: 23,
+color_id: 35
+
+lipstick_id: 24,
+color_id: 24
+
+lipstick_id: 24,
+color_id: 6
+
+lipstick_id: 25,
+color_id: 46
+
+lipstick_id: 25,
+color_id: 43
+
+lipstick_id: 26,
+color_id: 38
+
+lipstick_id: 26,
+color_id: 10
+
+------------------------
+
+lipstick_id: 27,
+color_id: 26
+
+lipstick_id: 27,
+color_id: 28
+
+lipstick_id: 28,
+color_id: 7
+
+lipstick_id: 28,
+color_id: 8
+
+lipstick_id: 29,
+color_id: 9
+
+lipstick_id: 29,
+color_id: 2
+
+lipstick_id: 30,
+color_id: 3
+
+lipstick_id: 30,
+color_id: 4
+
+lipstick_id: 31,
+color_id: 3
+
+lipstick_id: 31,
+color_id: 4
+
+------------------------
+
+lipstick_id: 32,
+color_id: 5
+
+lipstick_id: 32,
+color_id: 6
+
+lipstick_id: 33,
+color_id: 12
+
+lipstick_id: 33,
+color_id: 24
+
+lipstick_id: 33,
+color_id: 13
+
+lipstick_id: 34,
+color_id: 14
+
+lipstick_id: 34,
+color_id: 25
+
+lipstick_id: 34,
+color_id: 42
+
+lipstick_id: 35,
+color_id: 22
+
+lipstick_id: 35,
+color_id: 23
+
+lipstick_id: 36,
+color_id: 26
+
+lipstick_id: 36,
+color_id: 39
+
+lipstick_id: 37,
+color_id: 36
+
+lipstick_id: 37,
+color_id: 37
+
+lipstick_id: 38,
+color_id: 40
+
+lipstick_id: 38,
+color_id: 41
+
+lipstick_id: 39,
+color_id: 22
+
+lipstick_id: 39,
+color_id: 23
+
+lipstick_id: 39,
+color_id: 24
+

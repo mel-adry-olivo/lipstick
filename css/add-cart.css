@@ -1,0 +1,65 @@
+/* Cart Tab Styles */
+.cart-overlay {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 300px;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: right 0.3s ease;
+  z-index: 100;
+}
+
+.cart-overlay.active {
+  right: 0;
+}
+
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-bottom: 1px solid #ddd;
+}
+
+.cart-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.close-cart-btn {
+  cursor: pointer;
+  font-size: 20px;
+  background: none;
+  border: none;
+}
+.continue-shopping-btn {
+  background-color: #fc6c85; /* Set the background color */
+  color: white; /* Set text color */
+  border: none; /* Remove default border */
+  border-radius: 20px; /* Slight rounding of corners */
+  padding: 10px 20px; /* Add padding for better appearance */
+  font-size: 16px; /* Set font size */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  transition: background-color 0.3s; /* Add transition for smooth hover effect */
+}
+.continue-shopping-btn:hover {
+  background-color: #e95c74; /* Darker shade on hover */
+}
+
+.checkout-btn {
+  margin-top: 10px; /* Spacing between buttons */
+  padding: 10px 20px;
+  background-color: #e95c74; /* Customize as needed */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Button to trigger cart overlay */
+.header-action-btn {
+  cursor: pointer;
+}

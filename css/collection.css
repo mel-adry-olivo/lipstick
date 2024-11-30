@@ -1,0 +1,41 @@
+/*-----------------------------------*\
+    Collection Section Styles
+\*-----------------------------------*/
+
+/* General styles for the shop section */
+.section.shop {
+  padding: 60px 0; /* Adjust padding as necessary */
+}
+
+.container {
+  max-width: 1200px; /* Set maximum width for the container */
+  margin: 0 auto; /* Center the container */
+  padding: 0 20px; /* Add horizontal padding */
+}
+
+/* Title Wrapper */
+.title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px; /* Space between title and products */
+}
+
+/* Scrollable List */
+.has-scrollbar {
+  overflow-x: auto; /* Enable horizontal scrolling */
+  padding: 10px 0; /* Add padding above and below the list */
+  display: flex; /* Use flex to align items horizontally */
+  margin-bottom: 2rem;
+}
+
+/* Scrollbar Items */
+.scrollbar-item {
+  margin-right: 20px; /* Space between items */
+  .color-shades {
+    margin-top: 10px; /* Space above the color options */
+    text-align: center; /* Center text */
+  }
+}
+
+/* Add any other collection-specific styles as needed */
