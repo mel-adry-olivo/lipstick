@@ -32,7 +32,7 @@ $collections = allCollections();
       <div class="container">
         <div class="title-wrapper">
           <h2 class="h2.1 section-title">Our Collections</h2>
-          <a href="#" id="shopNowButton1" class="btn-link">
+          <a href="./all-products.php" id="shopNowButton1" class="btn-link">
             <span class="span">Shop All Products</span>
             <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
           </a>

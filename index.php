@@ -128,7 +128,7 @@ $offer = offeredProduct();
               <div class="banner-card banner-card-1 has-before hover:shine">
                 <p class="card-subtitle">New Collection</p>
                 <h2 class="h2 card-title">Discover Our Yves Saint Laurent (YSL) Rouge Pur Couture Collection</h2>
-                <a href="./collection.php" id="shopNowButton3" class="btn btn-secondary">Explore More</a>
+                <a href="./catalog-products.php?brand_id=3" id="shopNowButton3" class="btn btn-secondary">Explore More</a>
                 <div class="has-bg-image" style="background-image: url('images/banner-1.jpg')"></div>
               </div>
             </li>
@@ -152,57 +152,28 @@ $offer = offeredProduct();
           <ul class="flex-list">
             <li class="flex-item">
               <div class="feature-card">
-                <img
-                  src="images/feature-1.jpg"
-                  width="204"
-                  height="236"
-                  loading="lazy"
-                  alt="Guaranteed PURE"
-                  class="card-icon"
-                />
-
+                <img src="images/feature-1.jpg" width="204" height="236" loading="lazy" alt="Guaranteed PURE" class="card-icon"/>
                 <h3 class="h3 card-title">Guaranteed PURE</h3>
-
                 <p class="card-text">
                   All Grace formulations adhere to strict purity standards and will never contain
                   harsh or toxic ingredients
                 </p>
               </div>
             </li>
-
             <li class="flex-item">
               <div class="feature-card">
-                <img
-                  src="images/feature-2.jpg"
-                  width="204"
-                  height="236"
-                  loading="lazy"
-                  alt="Completely Cruelty-Free"
-                  class="card-icon"
-                />
-
+                <img src="images/feature-2.jpg" width="204" height="236" loading="lazy" alt="Completely Cruelty-Free" class="card-icon"/>
                 <h3 class="h3 card-title">Completely Cruelty-Free</h3>
-
                 <p class="card-text">
                   All Grace formulations adhere to strict purity standards and will never contain
                   harsh or toxic ingredients
                 </p>
               </div>
             </li>
-
             <li class="flex-item">
               <div class="feature-card">
-                <img
-                  src="images/feature-3.jpg"
-                  width="204"
-                  height="236"
-                  loading="lazy"
-                  alt="Ingredient Sourcing"
-                  class="card-icon"
-                />
-
+                <img src="images/feature-3.jpg" width="204" height="236" loading="lazy" alt="Ingredient Sourcing" class="card-icon"/>
                 <h3 class="h3 card-title">Ingredient Sourcing</h3>
-
                 <p class="card-text">
                   All Grace formulations adhere to strict purity standards and will never contain
                   harsh or toxic ingredients

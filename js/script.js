@@ -63,7 +63,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   addEventOnElem(window, 'scroll', headerSticky);
 
-  // Scroll reveal effect
   const sections = document.querySelectorAll('[data-section]');
 
   const scrollReveal = function () {

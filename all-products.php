@@ -36,7 +36,7 @@ $allbrands = allbrands();
             <ul class="brands-list">
               <?php foreach ($allbrands as $brand) { ?>
               <li class="brands-item">
-                <a href="./catalog-products.php?brand_id=<?php echo $brand['id']; ?>" class="brands-link">
+                <a href="./catalog-products.php?brand_name=<?php echo $brand['name']; ?>" class="brands-link">
                   <img
                     src="<?php echo $brand['image_url']; ?>"
                     width="100"
@@ -59,13 +59,10 @@ $allbrands = allbrands();
               <div class="sort-by">
                 <span>Sort by:</span>
                 <select>
-                  <option value="feature">Feature</option>
                   <option value="price-asc">Price: Low to High</option>
                   <option value="price-desc">Price: High to Low</option>
                   <option value="name-asc">Name: A to Z</option>
                   <option value="name-desc">Name: Z to A</option>
-                  <option value="oldest">Oldest to Newest</option>
-                  <option value="newest">Newest to Oldest</option>
                 </select>
               </div>
             </div>
@@ -83,6 +80,7 @@ $allbrands = allbrands();
     <script src="js/all-products.js" defer></script>
     <script src="js/add-cart.js" defer></script>
     <script src="js/favorites.js" defer></script>
+    <script src="js/sort.js""></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   </body>

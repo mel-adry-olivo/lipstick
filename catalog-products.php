@@ -5,9 +5,9 @@ require './includes/product.php';
 
 $products = [];
 
-if(isset($_GET['brand_id'])) {
-  $brandId = $_GET['brand_id'] ?? '';
-  $products = allBrandProducts($brandId);
+if(isset($_GET['brand_name'])) {
+  $brand_name = $_GET['brand_name'] ?? '';
+  $products = allBrandProducts($brand_name);
 }
 
 if(isset($_GET['category_name'])) {
@@ -15,7 +15,7 @@ if(isset($_GET['category_name'])) {
   $products = allCategoryProducts($categoryName);
 }
 
-$title = isset($_GET['brand_id']) ?  $products[0]['brand_name'] : $categoryName;
+$title = isset($_GET['brand_name']) ?  $brand_name : $categoryName;
 $title = ucfirst($title);
 ?>
 
@@ -50,13 +50,10 @@ $title = ucfirst($title);
               <div class="sort-by">
                 <span>Sort by:</span>
                 <select>
-                  <option value="feature">Feature</option>
                   <option value="price-asc">Price: Low to High</option>
                   <option value="price-desc">Price: High to Low</option>
                   <option value="name-asc">Name: A to Z</option>
                   <option value="name-desc">Name: Z to A</option>
-                  <option value="oldest">Oldest to Newest</option>
-                  <option value="newest">Newest to Oldest</option>
                 </select>
               </div>
             </div>
@@ -74,14 +71,10 @@ $title = ucfirst($title);
     <script src="js/all-products.js" defer></script>
     <script src="js/add-cart.js" defer></script>
     <script src="js/favorites.js" defer></script>
-
-    <script
-      type="module"
-      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    <script src="js/sort.js""></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
     ></script>
-    <script
-      nomodule
-      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
     ></script>
   </body>
 </html>

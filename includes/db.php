@@ -21,6 +21,47 @@ function login($username, $password) {
     return $result->fetch_assoc();
 }
 
+function productById($id) {
+    $conn = new mysqli('localhost', 'root', '', 'lipstick');
+    if ($conn->connect_error) {
+        exit("Connection failed: " . $conn->connect_error);
+    }
+
+    $sql = "
+    SELECT 
+        l.id, 
+        l.name, 
+        l.description, 
+        l.price, 
+        l.image_url, 
+        b.name AS brand_name, 
+        c.name AS category_name,
+        GROUP_CONCAT(col.name SEPARATOR ', ') AS color_names,
+        GROUP_CONCAT(col.hex_code SEPARATOR ', ') AS color_hex_codes,
+        COALESCE(ROUND(AVG(r.rating), 1), 0) AS average_rating
+    FROM 
+        lipsticks l
+    JOIN 
+        brands b ON l.brand_id = b.id
+    JOIN 
+        categories c ON l.category_id = c.id
+    JOIN 
+        lipstick_colors lc ON l.id = lc.lipstick_id
+    JOIN 
+        colors col ON lc.color_id = col.id
+    LEFT JOIN 
+        reviews r ON l.id = r.lipstick_id
+    WHERE 
+        l.id = $id
+    GROUP BY 
+        l.id
+    ORDER BY 
+        average_rating DESC;
+    ";
+    $result = $conn->query($sql);
+    return $result->fetch_assoc();
+}
+
 function under500products() {
     $conn = new mysqli('localhost', 'root', '', 'lipstick');
     if ($conn->connect_error) {
@@ -103,13 +144,12 @@ function allProducts() {
         l.id
     ORDER BY 
         average_rating DESC;
-
     ";
   $result = $conn->query($sql);
   return $result->fetch_all(MYSQLI_ASSOC); 
 }
 
-function allBrandProducts($brandId) {
+function allBrandProducts($brandName) {
     $conn = new mysqli('localhost', 'root', '', 'lipstick');
     if ($conn->connect_error) {
         exit("Connection failed: " . $conn->connect_error);
@@ -140,11 +180,11 @@ function allBrandProducts($brandId) {
     LEFT JOIN 
         reviews r ON l.id = r.lipstick_id
     WHERE 
-        b.id = $brandId
+        b.name = '$brandName'
     GROUP BY 
         l.id
     ORDER BY 
-        average_rating DESC";
+        RAND()";
 
     $result = $conn->query($sql);
     return $result->fetch_all(MYSQLI_ASSOC); 

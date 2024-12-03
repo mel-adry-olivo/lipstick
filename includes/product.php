@@ -22,12 +22,11 @@ function render_product($lipstick) {
                     <span class="span">₱<?php echo $lipstick['price']; ?></span>
                 </div>
                 <h3>
-                    <a href="product-detail.html?id=<?php echo $lipstick['id']; ?>" class="card-title"><?php echo $lipstick['name']; ?> Lip</a>
+                    <a href="./product-detail.php?id=<?php echo $lipstick['id']; ?>" class="card-title"><?php echo $lipstick['name']; ?> Lip</a>
                 </h3>
                 <div class="card-rating">
                     <div class="rating-wrapper" aria-label="<?php echo $lipstick['average_rating']; ?>-star rating">
                         <?php
-                        // Display filled stars based on the average rating
                         for ($i = 1; $i <= 5; $i++) {
                             if ($i <= $lipstick['average_rating']) {
                                 echo '<ion-icon name="star" aria-hidden="true"></ion-icon>';
