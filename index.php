@@ -1,5 +1,5 @@
 <?php 
-
+session_start();
 require './includes/db.php';
 require './includes/product.php';
 
@@ -37,7 +37,7 @@ $offer = offeredProduct();
                   <h1 class="h1 hero-title">Discover Your<br/>Signature Shade</h1>
                   <p class="hero-text">Emphasize the long-lasting formula and its perfect application for special occasions.</p>
                   <p class="price">Starting at ₱100.00</p>
-                  <a href="#" id="shopNowButton1" class="btn btn-primary">Shop Now</a>
+                  <a href="./all-products.php" id="shopNowButton1" class="btn btn-primary">Shop Now</a>
                 </div>
               </div>
             </li>
@@ -47,7 +47,7 @@ $offer = offeredProduct();
                   <h1 class="h1 hero-title">Reveal The <br/>Beauty of your Lips</h1>
                   <p class="hero-text">Made using clean, non-toxic ingredients, our products are designed for everyone.</p>
                   <p class="price">Starting at ₱100.00</p>
-                  <a href="#" class="btn btn-primary">Shop Now</a>
+                  <a href="./all-products.php" class="btn btn-primary">Shop Now</a>
                 </div>
               </div>
             </li>
@@ -57,7 +57,7 @@ $offer = offeredProduct();
                   <h1 class="h1 hero-title">Reveal The <br/>Beauty of your Lips</h1>
                   <p class="hero-text">Made using clean, non-toxic ingredients, our products are designed for everyone.</p>
                   <p class="price">Starting at ₱100.00</p>
-                  <a href="#" class="btn btn-primary">Shop Now</a>
+                  <a href="./all-products.php" class="btn btn-primary">Shop Now</a>
                 </div>
               </div>
             </li>

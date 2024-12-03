@@ -2,38 +2,6 @@
 
 // Wait for the DOM to load
 document.addEventListener('DOMContentLoaded', function () {
-  // Get the Shop Now buttons by their IDs
-  const shopNowButton1 = document.getElementById('shopNowButton1');
-  const shopNowButton3 = document.getElementById('shopNowButton3');
-  const shopNowButton4 = document.getElementById('shopNowButton4');
-
-  // Check if the second shopNowButton1 exists
-  if (shopNowButton1) {
-    // Add click event listener to the second button
-    shopNowButton1.addEventListener('click', function (event) {
-      // Prevent the default anchor link behavior
-      event.preventDefault();
-
-      // Redirect to all-products.html
-      window.location.href = 'all-products.html';
-    });
-  }
-
-  if (shopNowButton3) {
-    shopNowButton3.addEventListener('click', function (event) {
-      event.preventDefault();
-      window.location.href = 'collection.html'; // Redirect to collection.html
-    });
-  }
-
-  if (shopNowButton4) {
-    shopNowButton4.addEventListener('click', function (event) {
-      event.preventDefault();
-      window.location.href = 'all-products.html'; // Redirect to all-products.html
-    });
-  }
-
-  // Function to add event on element
   const addEventOnElem = function (elem, type, callback) {
     if (elem instanceof NodeList) {
       elem.forEach((element) => {
@@ -44,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   };
 
-  // Navbar toggle
   const navTogglers = document.querySelectorAll('[data-nav-toggler]');
   const navbar = document.querySelector('[data-navbar]');
   const navbarLinks = document.querySelectorAll('[data-nav-link]');

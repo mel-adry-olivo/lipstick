@@ -4,13 +4,10 @@ session_start();
 
 require './includes/db.php';
 
-if(isset($_POST['login'])) {
-  $user = login($_POST['username'], md5($_POST['password']));
-  if($user) {
-    $_SESSION['user_id'] = $user['id'];
-    $_SESSION['username'] = $user['username'];
-    header('Location: ./index.php');
-  } 
+if(isset($_POST['logout'])) {
+  session_unset();
+  session_destroy();
+  header('Location: ./index.php');
 }
 
 
@@ -39,26 +36,10 @@ if(isset($_POST['login'])) {
     <?php include './includes/header.php'?>
     <main>
       <div class="login-container">
-        <h1>Login</h1>
-        <form action="./login.php" method="POST" id="login-form">
-          <label for="username">Username:</label>
-          <input type="text" id="username" name="username" required />
-          <label for="password">Password:</label>
-          <div class="password-wrapper">
-            <input type="password" id="password" name="password" required />
-            <i class="fas fa-eye-slash" id="togglePassword"></i>
-          </div>
-          <button type="submit" name="login">Login</button>
+        <h1>Logout</h1>
+        <form action="./logout.php" method="POST" id="login-form">
+          <button type="submit" name="logout">Logout</button>
         </form>
-        <div class="social-login">
-          <p>Or login with:</p>
-          <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
-          <a href="#" class="social-icon"><i class="fab fa-google"></i></a>
-          <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-        </div>
-        <div class="signup-footer">
-          <p>Don't have an account? <a href="./signup.php">Sign up here</a></p>
-        </div>
       </div>
     </main>
     <?php include './includes/footer.php'?>

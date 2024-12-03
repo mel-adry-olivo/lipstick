@@ -24,7 +24,8 @@
                 <img src="images/logo.png" width="179" height="26" alt="Glowing" />
             </a>
             <div class="header-actions">
-                <a href="login.php">
+              <p><?php echo isset($_SESSION['user_id']) ?  'Hello, ' . $_SESSION['username'] : '';?></p>
+                <a href="<?php echo isset($_SESSION['user_id']) ? './logout.php' : './login.php'; ?> ">
                     <button class="header-action-btn" aria-label="user">
                     <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
                     </button>

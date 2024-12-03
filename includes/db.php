@@ -1,5 +1,26 @@
 <?php 
 
+function signUp($username, $password) {
+    $conn = new mysqli('localhost', 'root', '', 'lipstick');
+    if ($conn->connect_error) {
+        exit("Connection failed: " . $conn->connect_error);
+    }
+
+    $sql = "INSERT INTO users (username, password) VALUES ('$username', '$password')";
+    return $conn->query($sql);
+}
+
+function login($username, $password) {
+    $conn = new mysqli('localhost', 'root', '', 'lipstick');
+    if ($conn->connect_error) {
+        exit("Connection failed: " . $conn->connect_error);
+    }
+
+    $sql = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
+    $result = $conn->query($sql);
+    return $result->fetch_assoc();
+}
+
 function under500products() {
     $conn = new mysqli('localhost', 'root', '', 'lipstick');
     if ($conn->connect_error) {

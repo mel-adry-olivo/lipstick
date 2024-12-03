@@ -4,13 +4,13 @@ session_start();
 
 require './includes/db.php';
 
-if(isset($_POST['login'])) {
-  $user = login($_POST['username'], md5($_POST['password']));
-  if($user) {
-    $_SESSION['user_id'] = $user['id'];
-    $_SESSION['username'] = $user['username'];
-    header('Location: ./index.php');
-  } 
+if(isset($_POST['signup'])) {
+  $success = signUp($_POST['username'], md5($_POST['password']));
+  if($success) {
+    header('Location: login.php');
+  } else {
+    echo 'Error signing up';
+  }
 }
 
 
@@ -39,8 +39,8 @@ if(isset($_POST['login'])) {
     <?php include './includes/header.php'?>
     <main>
       <div class="login-container">
-        <h1>Login</h1>
-        <form action="./login.php" method="POST" id="login-form">
+        <h1>Sign up</h1>
+        <form action="./signup.php" method="POST" id="login-form">
           <label for="username">Username:</label>
           <input type="text" id="username" name="username" required />
           <label for="password">Password:</label>
@@ -48,16 +48,16 @@ if(isset($_POST['login'])) {
             <input type="password" id="password" name="password" required />
             <i class="fas fa-eye-slash" id="togglePassword"></i>
           </div>
-          <button type="submit" name="login">Login</button>
+          <button type="submit" name="signup">Login</button>
         </form>
         <div class="social-login">
-          <p>Or login with:</p>
+          <p>Or sign up with:</p>
           <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
           <a href="#" class="social-icon"><i class="fab fa-google"></i></a>
           <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
         </div>
         <div class="signup-footer">
-          <p>Don't have an account? <a href="./signup.php">Sign up here</a></p>
+          <p>Already have an account? <a href="./login.php">Login here</a></p>
         </div>
       </div>
     </main>
