@@ -1,10 +1,7 @@
 /* Product List Styles */
 .product-list {
   display: grid; /* Use grid layout */
-  grid-template-columns: repeat(
-    auto-fill,
-    minmax(220px, 1fr)
-  ); /* Responsive columns */
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Responsive columns */
   gap: 20px; /* Space between product cards */
   padding: 20px; /* Space around the grid */
 }
@@ -70,4 +67,27 @@
 
 .brands-link:hover .brands-logo {
   transform: scale(1.05); /* slightly enlarge logo on hover */
+}
+
+#all-products {
+  min-height: 90vh;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.sort-wrapper {
+  display: flex;
+  gap: 16px;
+}
+
+.reserve-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 48px;
+}
+
+.reserve-form button {
+  max-width: none;
+  width: 50%;
 }

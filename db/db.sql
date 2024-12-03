@@ -59,7 +59,8 @@ CREATE TABLE user_favorites (
   lipstick_id INT NOT NULL,
   added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE,
-  FOREIGN KEY (lipstick_id) REFERENCES lipsticks(id) ON UPDATE CASCADE ON DELETE CASCADE
+  FOREIGN KEY (lipstick_id) REFERENCES lipsticks(id) ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT unique_user_lipstick_favorite UNIQUE (user_id, lipstick_id)
 );
 
 CREATE TABLE user_cart (
@@ -69,7 +70,8 @@ CREATE TABLE user_cart (
   quantity INT NOT NULL DEFAULT 1,
   added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE,
-  FOREIGN KEY (lipstick_id) REFERENCES lipsticks(id) ON UPDATE CASCADE ON DELETE CASCADE
+  FOREIGN KEY (lipstick_id) REFERENCES lipsticks(id) ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT unique_user_lipstick_cart UNIQUE (user_id, lipstick_id)
 );
 
 INSERT INTO brands (name, image_url)

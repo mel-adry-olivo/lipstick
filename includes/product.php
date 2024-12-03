@@ -1,20 +1,37 @@
 <?php
+
+
 function render_product($lipstick) {
+    
+    $inCart = $_SERVER['REQUEST_URI'] == '/lipstick/cart.php';
+    $inFavorites = $_SERVER['REQUEST_URI'] == '/lipstick/favorites.php';
+    $action = $inCart ? './cart.php' : './favorites.php';
     ?>
     <li class="scrollbar-item">
         <div class="shop-card">
+            <?php if($inCart || $inFavorites) :?>
+                <form action="<?php echo $action; ?>" method="POST">
+                    <input type="hidden" name="id" value="<?php echo $lipstick['id']; ?>">
+                    <button class="action-btn" name="delete" type="submit" onclick="return confirm('Are you sure you want to delete?')">
+                        Delete
+                    </button>
+                </form>
+            <?php endif; ?>
             <div class="card-banner img-holder" style="--width: 540; --height: 720">
                 <img src="<?php echo $lipstick['image_url']; ?>" width="540" height="720" loading="lazy" alt="Cherry Red Lipstick" class="img-cover"/>
                 <div class="card-actions">
-                    <button class="action-btn" aria-label="add to cart">
-                        <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
-                    </button>
-                    <button class="action-btn" aria-label="add to wishlist">
-                        <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    </button>
-                    <button class="action-btn" aria-label="reserve">
-                        <ion-icon name="book-outline" aria-hidden="true"></ion-icon>
-                    </button>
+                    <form action="./cart.php" method="POST">
+                        <input type="hidden" name="id" value="<?php echo $lipstick['id']; ?>">
+                        <button class="action-btn" name="cart" type="submit">
+                            <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+                        </button>
+                    </form>
+                    <form action="./favorites.php" method="POST">
+                        <input type="hidden" name="id" value="<?php echo $lipstick['id']; ?>">
+                        <button class="action-btn" name="favorites" type="submit">
+                            <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
+                        </button>
+                    </form>
                 </div>
             </div>
             <div class="card-content">

@@ -30,15 +30,15 @@
                     <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
                     </button>
                 </a>
-                <button class="header-action-btn" id="favourites-icon" aria-label="favourite item">
+                <a href="./favorites.php" class="header-action-btn" id="favourites-icon" aria-label="favourite item">
                     <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    <span class="btn-badge">0</span>
-                </button>
-                <button class="header-action-btn" id="cart-icon" aria-label="cart item">
+                    <!-- <span class="btn-badge">0</span> -->
+                </a>
+                <a href="./cart.php" class="header-action-btn" id="cart-icon" aria-label="cart item">
                     <data class="btn-text" value="0">$0.00</data>
                     <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
-                    <span class="btn-badge">0</span>
-                </button>
+                    <!-- <span class="btn-badge">0</span> -->
+                </a>
             </div>
         </div>
     </div>
@@ -72,7 +72,7 @@
             </li>
         </ul>
     </nav>
-    <div class="cart-overlay" id="cart-overlay">
+    <!-- <div class="cart-overlay" id="cart-overlay">
         <div class="cart-header">
             <h2>Your Cart</h2>
             <button class="close-cart-btn" id="close-cart-btn">&times;</button>
@@ -92,7 +92,7 @@
             <p id="favourites-message">You have no favourites yet.</p>
             <button class="continue-shopping-btn" id="continue-shopping">Continue Shopping</button>
         </div>
-    </div>
+    </div> -->
     <div class="mobile-navbar" data-navbar>
       <div class="wrapper">
         <a href="#" class="logo">
