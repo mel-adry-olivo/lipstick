@@ -258,6 +258,12 @@ body {
   scroll-snap-type: inline mandatory;
 }
 
+.has-scrollbar-disabled {
+  overflow-x: hidden;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+
 .scrollbar-item {
   min-width: 100%;
   scroll-snap-align: start;

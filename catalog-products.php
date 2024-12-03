@@ -3,8 +3,20 @@
 require './includes/db.php';
 require './includes/product.php';
 
-$allproducts = allproducts();
-$allbrands = allbrands();
+$products = [];
+
+if(isset($_GET['brand_id'])) {
+  $brandId = $_GET['brand_id'] ?? '';
+  $products = allBrandProducts($brandId);
+}
+
+if(isset($_GET['category_name'])) {
+  $categoryName = $_GET['category_name'] ?? '';
+  $products = allCategoryProducts($categoryName);
+}
+
+$title = isset($_GET['brand_id']) ?  $products[0]['brand_name'] : $categoryName;
+$title = ucfirst($title);
 ?>
 
 <!DOCTYPE html>
@@ -13,10 +25,11 @@ $allbrands = allbrands();
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Artemis - Beauty Code | Collection</title>
+    <title>Artemis - Beauty Code | Products</title>
     <link rel="shortcut icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/all-products.css" />
+    <link rel="stylesheet" href="css/login.css" />
     <link rel="stylesheet" href="css/add-cart.css" />
     <link rel="stylesheet" href="css/favorites.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -27,35 +40,13 @@ $allbrands = allbrands();
     />
   </head>
   <body id="top">
-    <?php include './includes/header.php'?>
+    <?php include './includes/header.php'; ?>
     <main>
       <article>
-        <section class="section brands" id="brands" data-section>
-          <div class="container">
-            <h2 class="h2.1 section-title">Lipstick Brands</h2>
-            <ul class="brands-list">
-              <?php foreach ($allbrands as $brand) { ?>
-              <li class="brands-item">
-                <a href="./catalog-products.php?brand_id=<?php echo $brand['id']; ?>" class="brands-link">
-                  <img
-                    src="<?php echo $brand['image_url']; ?>"
-                    width="100"
-                    height="100"
-                    loading="lazy"
-                    alt="<?php $brand['name']?> Logo"
-                    class="brands-logo"
-                  />
-                </a>
-              </li>
-              <?php } ?>
-            </ul>
-          </div>
-        </section>
         <section class="section shop" id="all-products" data-section>
           <div class="container">
             <div class="title-wrapper">
-              <h2 class="h2.1 section-title">Products</h2>
-
+              <h2 class="h2 section-title"><?php echo $title; ?></h2>
               <div class="sort-by">
                 <span>Sort by:</span>
                 <select>
@@ -70,7 +61,7 @@ $allbrands = allbrands();
               </div>
             </div>
             <ul class="has-scrollbar has-scrollbar-disabled">
-              <?php foreach ($allproducts as $product) {
+              <?php foreach ($products as $product) {
                 render_product($product);
               }?>
             </ul>
@@ -174,6 +165,8 @@ $allbrands = allbrands();
             </form>
           </div>
         </div>
+        <!-- Closing footer-top -->
+
         <div class="footer-bottom">
           <div class="wrapper">
             <p class="copyright">&copy; 2024, Dianah Marie Canonicato</p>
@@ -226,15 +219,24 @@ $allbrands = allbrands();
             class="w-100"
           />
         </div>
+        <!-- Closing footer-bottom -->
       </div>
+      <!-- Closing container -->
     </footer>
 
+    <!-- Scripts -->
     <script src="js/script.js" defer></script>
     <script src="js/all-products.js" defer></script>
     <script src="js/add-cart.js" defer></script>
     <script src="js/favorites.js" defer></script>
 
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
   </body>
 </html>

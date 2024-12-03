@@ -3,39 +3,8 @@
 require './includes/db.php';
 require './includes/product.php';
 
-$sql = "
-  SELECT 
-      l.id, 
-      l.name, 
-      l.image_url, 
-      l.price, 
-      GROUP_CONCAT(c.name SEPARATOR ', ') AS color_names,
-      GROUP_CONCAT(c.hex_code SEPARATOR ', ') AS color_hex_codes,
-      COALESCE(ROUND(AVG(r.rating)), 0) AS average_rating
-  FROM lipsticks l
-  JOIN lipstick_colors lc ON l.id = lc.lipstick_id
-  JOIN colors c ON lc.color_id = c.id
-  LEFT JOIN reviews r ON l.id = r.lipstick_id 
-  GROUP BY l.id
-  LIMIT 5
-  ";
-$result = $conn->query($sql);
-$under500 = $result->fetch_all(MYSQLI_ASSOC);
-
-
-$offerSql = "
-  SELECT 
-      l.id, 
-      l.name, 
-      l.description,
-      l.image_url, 
-      l.price
-  FROM lipsticks l
-  WHERE l.id = 15
-  ";
-
-$offerResult = $conn->query($offerSql);
-$offer = $offerResult->fetch_all(MYSQLI_ASSOC)[0];
+$under500 = under500products();
+$offer = offeredProduct();
 ?>
 <!DOCTYPE html>
 <html lang="en">

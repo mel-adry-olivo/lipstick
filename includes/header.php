@@ -53,33 +53,18 @@
                 <a href="./all-products.php" class="navbar-link has-after dropdown-toggle" aria-haspopup="true" aria-expanded="false">Shop</a>
                 <ul class="dropdown-menu landscape">
                     <li>
-                        <a href="./matte.php" class="dropdown-link">Matte</a>
+                        <a href="./catalog-products.php?category_name=matte" class="dropdown-link">Matte</a>
                     </li>
                     <li>
-                        <a href="./satin.php" class="dropdown-link">Satin</a>
+                        <a href="./catalog-products.php?category_name=satin" class="dropdown-link">Satin</a>
                     </li>
                     <li>
-                        <a href="./lipgloss.php" class="dropdown-link">Lip Gloss</a>
+                        <a href="./catalog-products.php?category_name=creamy" class="dropdown-link">Creamy</a>
                     </li>
                     <li>
-                        <a href="./lipstain.php" class="dropdown-link">Lip Stain</a>
-                    </li>
-                    <li>
-                        <a href="./liptint.php" class="dropdown-link">Lip Tint</a>
-                    </li>
-                    <li>
-                        <a href="./creamy.php" class="dropdown-link">Creamy</a>
-                    </li>
-                    <li>
-                        <a href="./sheer.php" class="dropdown-link">Sheer</a>
-                    </li>
-                    <li>
-                        <a href="./lipcrayons.php" class="dropdown-link">Lip Crayons</a>
+                        <a href="./catalog-products.php?category_name=sheer" class="dropdown-link">Sheer</a>
                     </li>
                 </ul>
-            </li>
-            <li>
-                <a href="./bestsellers.php" class="navbar-link has-after">Bestsellers</a>
             </li>
             <li>
                 <a href="./about.php" class="navbar-link has-after">About Us</a>

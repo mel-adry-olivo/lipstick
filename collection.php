@@ -3,32 +3,7 @@
 require './includes/db.php';
 require './includes/product.php';
 
-$sql ="
-  SELECT 
-      l.id,  
-      l.name, 
-      l.image_url, 
-      l.price, 
-      GROUP_CONCAT(c.name SEPARATOR ', ') AS color_names,
-      GROUP_CONCAT(c.hex_code SEPARATOR ', ') AS color_hex_codes,
-      COALESCE(ROUND(AVG(r.rating)), 0) AS average_rating,
-      col.name AS collection,  -- Changed alias to 'col' to avoid conflict
-      col.id AS collection_id
-  FROM lipsticks l
-  JOIN lipstick_colors lc ON l.id = lc.lipstick_id
-  JOIN colors c ON lc.color_id = c.id
-  LEFT JOIN reviews r ON l.id = r.lipstick_id 
-  JOIN collections col ON l.collection_id = col.id  -- Changed 'c' alias to 'col'
-  WHERE l.collection_id IN (1, 2, 3)
-  GROUP BY l.id
-  ";
-
-$result = $conn->query($sql);
-$collections = [];
-
-while($row = $result->fetch_assoc()) {
-  $collections[$row['collection_id']][] = $row;
-}
+$collections = allCollections();
 
 ?>
 

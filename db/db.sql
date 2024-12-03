@@ -22,8 +22,6 @@ CREATE TABLE lipsticks (
     name VARCHAR(100) NOT NULL,
     description TEXT,
     price DECIMAL(10, 2) NOT NULL,
-    original_price DECIMAL(10, 2),
-    discount_percentage INT,
     image_url VARCHAR(255),
     FOREIGN KEY (category_id) REFERENCES categories(id) ON UPDATE CASCADE ON DELETE RESTRICT,
     FOREIGN KEY (brand_id) REFERENCES brands(id) ON UPDATE CASCADE ON DELETE RESTRICT
