@@ -1,3 +1,9 @@
+<?php
+
+
+
+?>
+
 <header class="header">
     <div class="alert">
         <div class="container">
@@ -20,7 +26,7 @@
                     <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
                 </button>
             </div>
-            <a href="#" class="logo">
+            <a href="./" class="logo">
                 <img src="images/logo.png" width="179" height="26" alt="Glowing" />
             </a>
             <div class="header-actions">

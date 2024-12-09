@@ -21,6 +21,32 @@ function login($username, $password) {
     return $result->fetch_assoc();
 }
 
+function allReviews() {
+    $conn = new mysqli('localhost', 'root', '', 'lipstick');
+    if ($conn->connect_error) {
+        exit("Connection failed: " . $conn->connect_error);
+    }
+
+    $sql = "
+    SELECT * FROM reviews 
+    JOIN users ON reviews.user_id = users.id
+    ORDER BY created_at DESC"; 
+    $result = $conn->query($sql);
+    return $result->fetch_all(MYSQLI_ASSOC);    
+}
+
+function addReview($lipstick_id, $user_id, $rating, $review_text) {
+    $conn = new mysqli('localhost', 'root', '', 'lipstick');
+    if ($conn->connect_error) {
+        exit("Connection failed: " . $conn->connect_error);
+    }
+
+    $sql = "INSERT INTO reviews (lipstick_id, user_id, rating, review_text) VALUES ($lipstick_id, $user_id, $rating, '$review_text')";
+    if(!$conn->query($sql)) {
+        echo "Error: " . $conn->error;
+    }
+}
+
 function productById($id) {
     $conn = new mysqli('localhost', 'root', '', 'lipstick');
     if ($conn->connect_error) {

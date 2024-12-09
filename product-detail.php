@@ -9,7 +9,20 @@ if(isset($_GET['id'])) {
   $product = productById($id);
 }
 
+if(isset($_POST['submit-review']) && isset($_SESSION['user_id'])) {
+  $user_id = $_SESSION['user_id'];
+  $product_id = $product['id'];
+  $rating = $_POST['rating'];
+  $review = $_POST['review-text'];
+
+  addReview($product_id,$user_id, $rating, $review);
+  header('Location: ./product-detail.php?id=' . $product_id);
+  exit();
+}
+
+
 $brand = allBrandProducts($product['brand_name']);
+$reviews = allReviews($product['id']);
 
 ?>
 
@@ -54,12 +67,27 @@ $brand = allBrandProducts($product['brand_name']);
       <section class="reviews" id="reviews">
         <h3>Customer Reviews</h3>
         <div id="reviews-container">
+          <?php foreach ($reviews as $review) : ?>
+          <div class="review-item">
+          <div class="review-rating">
+            <?php
+              for ($i = 1; $i <= $review['rating']; $i++) {
+                  echo '★';
+              }
+              for ($i = $review['rating'] + 1; $i <= 5; $i++) {
+                  echo '☆'; 
+              }
+              ?>
+          </div>
+            <p><strong><?php echo $review['username']; ?>:</strong> <?php echo $review['review_text']; ?></p>
+          </div>
+          <?php endforeach; ?>
         </div>
         <h4>Add a Review</h4>
-        <form id="review-form">
+        <form action="./product-detail.php?id=<?php echo $product['id']; ?>" id="review-form" method="POST">
           <div id="rating-container">
             <label for="rating">Rating:</label>
-            <select id="rating" required>
+            <select id="rating" name="rating" required>
               <option value="">Select rating</option>
               <option value="1">1 Star</option>
               <option value="2">2 Stars</option>
@@ -69,11 +97,12 @@ $brand = allBrandProducts($product['brand_name']);
             </select>
           </div>
           <textarea
-            id="review-input"
-            placeholder="Write your review here..."
+            name = "review-text"
+            id = "review-input"
+            placeholder = "Write your review here..."
             required
           ></textarea>
-          <button type="submit">Submit Review</button>
+          <button type="submit" name="submit-review">Submit Review</button>
         </form>
       </section>
       <section class="related-products" id="related-products">

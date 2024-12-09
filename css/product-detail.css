@@ -126,14 +126,21 @@ main {
   margin-block-end: 20px;
 }
 
+#reviews-container {
+  max-height: 20rem;
+  overflow-y: auto;
+  border: 1px solid var(--gray-web);
+  padding: 8px;
+}
+
 .reviews .review-item {
-  margin-block-end: 20px;
+  margin-block-end: 16px;
+  border-bottom: 1px solid var(--gray-web);
 }
 
 .reviews .review-rating {
   font-size: var(--fs-6);
   font-weight: var(--fw-600);
-  margin-block-end: 10px;
 }
 
 .reviews .review-text {
@@ -167,6 +174,7 @@ main {
   padding: 10px;
   border: 1px solid var(--gray-web);
   border-radius: var(--radius-3);
+  resize: none;
 }
 
 .reviews button[type='submit'] {
