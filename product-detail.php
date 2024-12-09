@@ -34,7 +34,13 @@ if(isset($_GET['id'])) {
 }
 
 // if user clicked submit review
-if(isset($_POST['submit-review']) && isset($_SESSION['user_id'])) {
+if(isset($_POST['submit-review']) ) {
+
+  if(!isset($_SESSION['user_id'])) {
+    header('Location: ./login.php');
+    exit();
+  }
+
 	$user_id = $_SESSION['user_id'];
 	$lipstick_id = $lipstick['id'];
 	$rating = $_POST['rating'];
