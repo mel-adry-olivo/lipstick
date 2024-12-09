@@ -1,25 +1,53 @@
 <?php
 session_start();
-require './includes/db.php';
 require './includes/product.php';
 
+$conn = new mysqli('localhost', 'root', '', 'lipstick');
+if ($conn->connect_error) {
+    exit("Connection failed: " . $conn->connect_error);
+}
+
 if(isset($_POST['favorites']) && isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
-    $product_id = $_POST['id'];
-    addFavorites($user_id, $product_id);
+  $user_id = $_SESSION['user_id'];
+  $lipstick_id = $_POST['id'];
+
+  $insertSql = "INSERT INTO user_favorites (user_id, lipstick_id) VALUES ($user_id, $lipstick_id)";
+  $conn->query($insertSql);
 }
 
 if(isset($_POST['delete']) && isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
-    $product_id = $_POST['id'];
-    removeFavorite($user_id, $product_id);
+  $user_id = $_SESSION['user_id'];
+  $lipstick_id = $_POST['id'];
+
+  $removeSql = "DELETE FROM user_favorites WHERE user_id = $user_id AND lipstick_id = $lipstick_id";
+  $conn->query($removeSql);
+
+  header('Location: ./favorites.php');
+  exit();
 }
 
 $favorites = [];
 
 if(isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
-    $favorites = getFavorites($user_id);
+    $favoritesSql = "
+    SELECT 
+      lipsticks.*,
+      brands.name AS brand_name,
+      GROUP_CONCAT(colors.name SEPARATOR ', ') AS color_names,
+      GROUP_CONCAT(colors.hex_code SEPARATOR ', ') AS color_hex_codes,
+      ROUND(AVG(reviews.rating), 1) AS average_rating
+    FROM user_favorites
+    JOIN lipsticks ON user_favorites.lipstick_id = lipsticks.id
+    JOIN brands ON lipsticks.brand_id = brands.id
+    JOIN lipstick_colors ON lipsticks.id = lipstick_colors.lipstick_id
+    JOIN colors ON lipstick_colors.color_id = colors.id
+    LEFT JOIN reviews ON lipsticks.id = reviews.lipstick_id
+    WHERE user_favorites.user_id = $user_id 
+    GROUP BY lipsticks.id";
+  
+    $favoritesRes = $conn->query($favoritesSql);
+    $favorites = $favoritesRes->fetch_all(MYSQLI_ASSOC);
 }
     
 ?>

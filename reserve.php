@@ -3,21 +3,54 @@ session_start();
 require './includes/db.php';
 require './includes/product.php';
 
+$conn = new mysqli('localhost', 'root', '', 'lipstick');
+if ($conn->connect_error) {
+    exit("Connection failed: " . $conn->connect_error);
+}
+
+
 if(isset($_POST['reserve']) && isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
-    reserve($user_id);
+  $user_id = $_SESSION['user_id'];
+  $reserveSql = "
+    INSERT INTO user_reserves (user_id, lipstick_id, added_at)
+    SELECT user_id, lipstick_id, added_at
+    FROM user_cart WHERE user_id = $user_id;
+  ";
+  
+  $conn->query($reserveSql);
 }
 
 if(isset($_POST['delete']) && isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
-    $product_id = $_POST['id'];
-    removeReserve($user_id, $product_id);
-    header('Location: ./reserve.php');
-    exit();
+  $user_id = $_SESSION['user_id'];
+  $product_id = $_POST['id'];
+
+  $removeSql = "DELETE FROM user_reserves WHERE user_id = $user_id AND lipstick_id = $product_id";
+  $conn->query($removeSql);
+
+  header('Location: ./reserve.php');
+  exit();
 }
 
 if(isset($_SESSION['user_id'])) {
-    $reserves = getReserves($_SESSION['user_id']);
+  $user_id = $_SESSION['user_id'];
+  $reservesSql = "
+  SELECT 
+    lipsticks.*,
+    brands.name AS brand_name,
+    GROUP_CONCAT(colors.name SEPARATOR ', ') AS color_names,
+    GROUP_CONCAT(colors.hex_code SEPARATOR ', ') AS color_hex_codes,
+    ROUND(AVG(reviews.rating), 1) AS average_rating
+  FROM user_reserves
+  JOIN lipsticks ON user_reserves.lipstick_id = lipsticks.id
+  JOIN brands ON lipsticks.brand_id = brands.id
+  JOIN lipstick_colors ON lipsticks.id = lipstick_colors.lipstick_id
+  JOIN colors ON lipstick_colors.color_id = colors.id
+  LEFT JOIN reviews ON lipsticks.id = reviews.lipstick_id
+  WHERE user_reserves.user_id = $user_id 
+  GROUP BY lipsticks.id";
+
+  $reservesRes = $conn->query($reservesSql);
+  $reserves = $reservesRes->fetch_all(MYSQLI_ASSOC);
 }
 
 ?>

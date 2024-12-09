@@ -1,39 +1,107 @@
 <?php
 
 session_start();
-require './includes/db.php';
 require './includes/product.php';
 
-if(isset($_GET['id'])) {
-	$id = $_GET['id'];
-	$product = productById($id);
+$conn = new mysqli('localhost', 'root', '', 'lipstick');
+if ($conn->connect_error) {
+    exit("Connection failed: " . $conn->connect_error);
 }
 
+// get lipstick id from query parameters
+if(isset($_GET['id'])) {
+	$id = $_GET['id'];
+
+  $lipstickSql = "
+  SELECT 
+      lipsticks.*,
+      brands.name AS brand_name,
+      categories.name AS category_name,
+      GROUP_CONCAT(colors.name SEPARATOR ', ') AS color_names,
+      GROUP_CONCAT(colors.hex_code SEPARATOR ', ') AS color_hex_codes,
+      ROUND(AVG(reviews.rating), 1) AS average_rating
+  FROM lipsticks
+  JOIN brands ON lipsticks.brand_id = brands.id
+  JOIN categories ON lipsticks.category_id = categories.id
+  JOIN lipstick_colors ON lipsticks.id = lipstick_colors.lipstick_id
+  JOIN colors ON lipstick_colors.color_id = colors.id
+  LEFT JOIN reviews ON lipsticks.id = reviews.lipstick_id 
+  WHERE lipsticks.id = $id
+  GROUP BY lipsticks.id";
+
+  $result = $conn->query($lipstickSql);
+	$lipstick = $result->fetch_assoc();
+}
+
+// if user clicked submit review
 if(isset($_POST['submit-review']) && isset($_SESSION['user_id'])) {
 	$user_id = $_SESSION['user_id'];
-	$product_id = $product['id'];
+	$lipstick_id = $lipstick['id'];
 	$rating = $_POST['rating'];
 	$review = $_POST['review-text'];
 
-	addReview($product_id,$user_id, $rating, $review);
-	header('Location: ./product-detail.php?id=' . $product_id);
+  $sql = "INSERT INTO reviews (lipstick_id, user_id, rating, review_text) VALUES ($lipstick_id, $user_id, $rating, '$review')";
+  $conn->query($sql);
+
+	header('Location: ./product-detail.php?id=' . $lipstick_id);
 	exit();
 }
 
+// if user clicked delete review
 if(isset($_POST['delete-review']) && isset($_SESSION['user_id'])) {
 	$user_id = $_SESSION['user_id'];
-	$product_id = $product['id'];
+	$lipstick_id = $lipstick['id'];
 	$review_id = $_POST['review-id'];
 
+	$sql = "DELETE FROM reviews WHERE id = $review_id";
+  $conn->query($sql);
 
-	deleteReview($review_id);
-	header('Location: ./product-detail.php?id=' . $product_id);
+	header('Location: ./product-detail.php?id=' . $lipstick_id);
 	exit();
 }
 
+// get related products
+$brand_name = $lipstick['brand_name'] ?? '';
+$lipsticksByBrandSql = "
+SELECT 
+    lipsticks.*,
+    brands.name AS brand_name,
+    categories.name AS category_name,
+    GROUP_CONCAT(colors.name SEPARATOR ', ') AS color_names,
+    GROUP_CONCAT(colors.hex_code SEPARATOR ', ') AS color_hex_codes,
+    ROUND(AVG(reviews.rating), 1) AS average_rating
+FROM lipsticks
+JOIN brands ON lipsticks.brand_id = brands.id
+JOIN categories ON lipsticks.category_id = categories.id
+JOIN lipstick_colors ON lipsticks.id = lipstick_colors.lipstick_id
+JOIN colors ON lipstick_colors.color_id = colors.id
+LEFT JOIN reviews ON lipsticks.id = reviews.lipstick_id 
+WHERE brands.name = '$brand_name'
+GROUP BY lipsticks.id
+ORDER BY RAND()
+";
 
-$brand = allBrandProducts($product['brand_name']);
-$reviews = allReviews($product['id']);
+$lipsticksByBrandSqlResult = $conn->query($lipsticksByBrandSql);
+$lipsticksByBrand = $lipsticksByBrandSqlResult->fetch_all(MYSQLI_ASSOC);
+
+
+// get reviews
+$lipstick_id = $lipstick['id'];
+$reviewsSql = "
+  SELECT  
+        reviews.id as id,
+        reviews.lipstick_id,
+        users.id as user_id,
+        users.username as username,
+        reviews.rating,
+        reviews.review_text
+    FROM reviews 
+    JOIN users ON reviews.user_id = users.id
+    WHERE lipstick_id = $lipstick_id
+    ORDER BY created_at DESC"; 
+    $reviewsResult = $conn->query($reviewsSql);
+
+$reviews = $reviewsResult->fetch_all(MYSQLI_ASSOC);  
 
 ?>
 
@@ -60,12 +128,12 @@ $reviews = allReviews($product['id']);
     <main>
       <section class="product-details" id="product-details">
         <div class="product-image-container">
-          <img id="product-image" src="<?php echo $product['image_url']; ?>" alt="Product Image" />
+          <img id="product-image" src="<?php echo $lipstick['image_url']; ?>" alt="Product Image" />
         </div>
         <div class="product-info">
-          <h2 id="product-name"><?php echo $product['name']; ?></h2>
-          <p id="product-description"><?php echo $product['description']; ?></p>
-          <p id="product-price">₱<?php echo $product['price']; ?></p>
+          <h2 id="product-name"><?php echo $lipstick['name']; ?></h2>
+          <p id="product-description"><?php echo $lipstick['description']; ?></p>
+          <p id="product-price">₱<?php echo $lipstick['price']; ?></p>
           <p id="product-review-count"></p>
           <div class="available-colors">
             <h4>Available Colors:</h4>
@@ -73,7 +141,7 @@ $reviews = allReviews($product['id']);
             </div>
           </div>
 		  <form action="./cart.php" method="POST">
-			<input type="hidden" name="id" value="<?php echo $product['id']; ?>">
+			<input type="hidden" name="id" value="<?php echo $lipstick['id']; ?>">
 			<button class="add-to-cart-btn" name="cart" type="submit">
 				Add to cart
 			</button>
@@ -100,7 +168,7 @@ $reviews = allReviews($product['id']);
 						<p class="review-text"><strong><?php echo $review['username']; ?>:</strong> <?php echo $review['review_text']; ?></p>
 					</div>
 					<?php if(isset($_SESSION['user_id']) && $_SESSION['user_id'] == $review['user_id']) : ?>
-						<form action="./product-detail.php?id=<?php echo $product['id']; ?>" method="POST" onsubmit="return confirm('Are you sure you want to delete this review?')">
+						<form action="./product-detail.php?id=<?php echo $lipstick['id']; ?>" method="POST" onsubmit="return confirm('Are you sure you want to delete this review?')">
 							<input type="hidden" name="review-id" value="<?php echo $review['id']; ?>">
 							<button name="delete-review" >Delete Review</button>
 						</form>
@@ -112,7 +180,7 @@ $reviews = allReviews($product['id']);
           <?php endif; ?>
         </div>
         <h4>Add a Review</h4>
-        <form action="./product-detail.php?id=<?php echo $product['id']; ?>" id="review-form" method="POST">
+        <form action="./product-detail.php?id=<?php echo $lipstick['id']; ?>" id="review-form" method="POST">
           <div id="rating-container">
             <label for="rating">Rating:</label>
             <select id="rating" name="rating" required>
@@ -137,8 +205,8 @@ $reviews = allReviews($product['id']);
         <h3>Related Products</h3>
         <div class="container">
           <ul class="has-scrollbar" id="related-products-list">
-            <?php foreach($brand as $product) {
-              render_product($product); 
+            <?php foreach($lipsticksByBrand as $lipstick) {
+              render_product($lipstick); 
             }?>
           </ul>
         </div>

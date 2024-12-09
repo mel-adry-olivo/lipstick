@@ -1,10 +1,5 @@
 <?php
 
-$cartTotal = 0;
-if(isset($_SESSION['user_id'])) {
-  $cartTotal = cartTotal($_SESSION['user_id']);
-}
-
 ?>
 
 <header class="header">
@@ -43,7 +38,6 @@ if(isset($_SESSION['user_id'])) {
                     <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
                 </a>
                 <a href="./cart.php" class="header-action-btn" id="cart-icon" aria-label="cart item">
-                    <data class="btn-text" value="0">₱<?php echo $cartTotal ? $cartTotal : '0.00'; ?></data>
                     <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
                 </a>
             </div>

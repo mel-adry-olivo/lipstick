@@ -8,11 +8,41 @@ if(!isset($_SESSION['user_id'])) {
     exit();
 }
 
-$products = allProducts();
+$conn = new mysqli('localhost', 'root', '', 'lipstick');
+if ($conn->connect_error) {
+    exit("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "
+  SELECT 
+      lipsticks.*,
+      brands.name AS brand_name,
+      categories.name AS category_name,
+      GROUP_CONCAT(colors.name SEPARATOR ', ') AS color_names,
+      GROUP_CONCAT(colors.hex_code SEPARATOR ', ') AS color_hex_codes,
+      ROUND(AVG(reviews.rating), 1) AS average_rating
+  FROM lipsticks
+  JOIN brands ON lipsticks.brand_id = brands.id
+  JOIN categories ON lipsticks.category_id = categories.id
+  JOIN lipstick_colors ON lipsticks.id = lipstick_colors.lipstick_id
+  JOIN colors ON lipstick_colors.color_id = colors.id
+  LEFT JOIN reviews ON lipsticks.id = reviews.lipstick_id 
+  GROUP BY lipsticks.id
+";
+
+$result = $conn->query($sql);
+$lipsticks = $result->fetch_all(MYSQLI_ASSOC);
 
 if(isset($_POST['delete'])) {
-    $product_id = $_POST['id'];
-    deleteLipstick($product_id);
+
+    $lipstick_id = $_POST['id'];
+    
+    $sql = "DELETE FROM lipstick_colors WHERE lipstick_id = $lipstick_id";
+    $conn->query($sql);
+
+    $sql = "DELETE FROM lipsticks WHERE id = $lipstick_id";
+    $conn->query($sql);
+
     header('Location: ./manage-products.php');
     exit();
 }
@@ -28,7 +58,7 @@ if(isset($_POST['delete'])) {
     <title>Artemis - Beauty Code | Products</title>
     <link rel="shortcut icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/all-products.css" />
+    <link rel="stylesheet" href="css/all-lipsticks.css" />
     <link rel="stylesheet" href="css/login.css" />
     <link rel="stylesheet" href="css/add-cart.css" />
     <link rel="stylesheet" href="css/favorites.css" />
@@ -41,7 +71,7 @@ if(isset($_POST['delete'])) {
     <?php include './includes/header.php'; ?>
     <main>
       <article>
-        <section class="section shop" id="all-products" data-section>
+        <section class="section shop" id="all-lipsticks" data-section>
           <div class="container">
             <div class="title-wrapper">
               <h2 class="h2 section-title">Manage Products</h2>
@@ -60,16 +90,16 @@ if(isset($_POST['delete'])) {
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($products as $product) : ?>
+                <?php foreach ($lipsticks as $lipstick) : ?>
                     <tr>
-                    <td><?php echo $product['id']; ?></td>
-                    <td><?php echo $product['name']; ?></td>
-                    <td><?php echo $product['brand_name']; ?></td>
-                    <td><?php echo $product['category_name']; ?></td>
+                    <td><?php echo $lipstick['id']; ?></td>
+                    <td><?php echo $lipstick['name']; ?></td>
+                    <td><?php echo $lipstick['brand_name']; ?></td>
+                    <td><?php echo $lipstick['category_name']; ?></td>
                     <td>
                     <?php
-                        $color_names = explode(', ', $product['color_names']);
-                        $color_hex_codes = explode(', ', $product['color_hex_codes']);
+                        $color_names = explode(', ', $lipstick['color_names']);
+                        $color_hex_codes = explode(', ', $lipstick['color_hex_codes']);
 
                         foreach ($color_names as $index => $color_name) :
                             $hex_code = isset($color_hex_codes[$index]) ? $color_hex_codes[$index] : '#000000'; 
@@ -80,11 +110,11 @@ if(isset($_POST['delete'])) {
                             </div>
                         <?php endforeach; ?>
                     </td>
-                    <td>$<?php echo number_format($product['price'], 2); ?></td>
+                    <td>$<?php echo number_format($lipstick['price'], 2); ?></td>
                     <td>
-                        <a href="./edit-product.php?id=<?php echo $product['id']; ?>" class="action-btn">Edit</a>
+                        <a href="./edit-product.php?id=<?php echo $lipstick['id']; ?>" class="action-btn">Edit</a>
                         <form action="./manage-products.php" method="post">
-                            <input type="hidden" name="id" value="<?php echo $product['id']; ?>">
+                            <input type="hidden" name="id" value="<?php echo $lipstick['id']; ?>">
                             <input type="hidden" name="action" value="delete">
                             <button type="submit" class="action-btn" name="delete" onclick="return confirm('Are you sure you want to delete this product?')">Delete</button>
                         </form>

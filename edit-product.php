@@ -1,6 +1,5 @@
 <?php
 session_start();
-require './includes/db.php';
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: ./login.php');
@@ -8,19 +7,61 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 if (!isset($_GET['id'])) {
-    header('Location: ./all-products.php');
+    header('Location: ./manage-products.php');
     exit();
 }
 
-$product_id = $_GET['id'];
-$product = productById($product_id);
-$brands = allBrands();
-$categories = allCategories();
-$colors = allColors();
+$conn = new mysqli('localhost', 'root', '', 'lipstick');
+if ($conn->connect_error) {
+    exit("Connection failed: " . $conn->connect_error);
+}
 
-$existing_color_ids = lipstickColorsIds($product_id);
+$lipstickId = $_GET['id'];
 
-var_dump($existing_color_ids);
+$brandsSql = "SELECT * FROM brands";
+$brandsResult = $conn->query($brandsSql);
+
+$categoriesSql = "SELECT * FROM categories";
+$categoriesResult = $conn->query($categoriesSql);
+
+$colorsSql = "SELECT * FROM colors";
+$colorsResult = $conn->query($colorsSql);
+
+$brands = $brandsResult->fetch_all(MYSQLI_ASSOC);
+$categories = $categoriesResult->fetch_all(MYSQLI_ASSOC);
+$colors = $colorsResult->fetch_all(MYSQLI_ASSOC);
+
+$lipstickSql = "
+  SELECT 
+      lipsticks.*,
+      brands.name AS brand_name,
+      categories.name AS category_name,
+      GROUP_CONCAT(colors.name SEPARATOR ', ') AS color_names,
+      GROUP_CONCAT(colors.hex_code SEPARATOR ', ') AS color_hex_codes,
+      ROUND(AVG(reviews.rating), 1) AS average_rating
+  FROM lipsticks
+  JOIN brands ON lipsticks.brand_id = brands.id
+  JOIN categories ON lipsticks.category_id = categories.id
+  JOIN lipstick_colors ON lipsticks.id = lipstick_colors.lipstick_id
+  JOIN colors ON lipstick_colors.color_id = colors.id
+  LEFT JOIN reviews ON lipsticks.id = reviews.lipstick_id 
+  WHERE lipsticks.id = $lipstickId 
+  GROUP BY lipsticks.id
+";
+
+$lipstickResult = $conn->query($lipstickSql);
+$lipstick = $lipstickResult->fetch_assoc();
+
+$currentColorsSql = "SELECT * FROM lipstick_colors WHERE lipstick_id = $lipstickId";
+$currentColorsResult = $conn->query($currentColorsSql);
+
+$currentColorIds = [];
+
+// inital selected colors
+while ($row = $currentColorsResult->fetch_assoc()) {
+    $currentColorIds[] = $row['color_id'];
+}
+
 
 if (isset($_POST['update'])) {
     $name = $_POST['name'];
@@ -31,8 +72,27 @@ if (isset($_POST['update'])) {
     $image_url = $_POST['image_url'];
     $selected_colors = $_POST['colors'];
 
-    updateLipstick($product_id, $name, $description, $price, $image_url, $brand_id, $category_id);
-    updateLipstickColors($product_id, $selected_colors);
+    // Update lipstick data
+    $updateSql = "
+        UPDATE lipsticks 
+        SET name = '$name', 
+            description = '$description', 
+            price = $price, 
+            image_url = '$image_url', 
+            brand_id = $brand_id, 
+            category_id = $category_id 
+        WHERE id = $lipstickId";
+    $conn->query($updateSql);
+
+    // Delete existing colors
+    $deleteSql = "DELETE FROM lipstick_colors WHERE lipstick_id = $lipstickId";
+    $conn->query($deleteSql);
+
+    // Add new colors
+    foreach ($selected_colors as $color) {
+        $sql = "INSERT INTO lipstick_colors (lipstick_id, color_id) VALUES ($lipstickId, $color)";
+        $conn->query($sql);
+    }
 
     header('Location: ./manage-products.php');  
     exit();
@@ -69,13 +129,13 @@ if (isset($_POST['update'])) {
                     <form action="" method="post" class="edit-form">
                         <div class="form-group">
                             <label for="name">Product Name</label>
-                            <input type="text" id="name" name="name" value="<?php echo $product['name']; ?>" required>
+                            <input type="text" id="name" name="name" value="<?php echo $lipstick['name']; ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="brand_id">Brand</label>
                             <select id="brand_id" name="brand_id" required>
                                 <?php foreach ($brands as $brand): ?>
-                                    <option value="<?php echo $brand['id']; ?>" <?php echo $product['brand_id'] == $brand['id'] ? 'selected' : ''; ?>>
+                                    <option value="<?php echo $brand['id']; ?>" <?php echo $lipstick['brand_id'] == $brand['id'] ? 'selected' : ''; ?>>
                                         <?php echo $brand['name']; ?>
                                     </option>
                                 <?php endforeach; ?>
@@ -85,7 +145,7 @@ if (isset($_POST['update'])) {
                             <label for="category_id">Category</label>
                             <select id="category_id" name="category_id" required>
                                 <?php foreach ($categories as $category): ?>
-                                    <option value="<?php echo $category['id']; ?>" <?php echo $product['category_id'] == $category['id'] ? 'selected' : ''; ?>>
+                                    <option value="<?php echo $category['id']; ?>" <?php echo $lipstick['category_id'] == $category['id'] ? 'selected' : ''; ?>>
                                         <?php echo $category['name']; ?>
                                     </option>
                                 <?php endforeach; ?>
@@ -93,21 +153,21 @@ if (isset($_POST['update'])) {
                         </div>
                         <div class="form-group">
                             <label for="description">Description</label>
-                            <textarea id="description" name="description" rows="5" required><?php echo $product['description']; ?></textarea>
+                            <textarea id="description" name="description" rows="5" required><?php echo $lipstick['description']; ?></textarea>
                         </div>
                         <div class="form-group">
                             <label for="price">Price</label>
-                            <input type="number" id="price" name="price" value="<?php echo $product['price']; ?>" step="0.01" required>
+                            <input type="number" id="price" name="price" value="<?php echo $lipstick['price']; ?>" step="0.01" required>
                         </div>
                         <div class="form-group">
                             <label for="image_url">Image URL</label>
-                            <input type="text" id="image_url" name="image_url" value="<?php echo $product['image_url']; ?>" placeholder="Ex: ./images/matte/NARS Velvet Touch.jpg">
+                            <input type="text" id="image_url" name="image_url" value="<?php echo $lipstick['image_url']; ?>" placeholder="Ex: ./images/matte/NARS Velvet Touch.jpg">
                         </div>
                         <div class="form-group">
                             <label for="colors">Colors (hold ctrl for multiple selection)</label>
                             <select id="colors" name="colors[]" multiple required>
                                 <?php foreach ($colors as $color): ?>
-                                    <option value="<?php echo $color['id']; ?>"<?php echo in_array($color['id'], $existing_color_ids) ? 'selected' : ''; ?>>
+                                    <option value="<?php echo $color['id']; ?>"<?php echo in_array($color['id'], $currentColorIds) ? 'selected' : ''; ?>>
                                         <?php echo $color['name']; ?> (<?php echo $color['hex_code']; ?>)
                                     </option>
                                 <?php endforeach; ?>

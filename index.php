@@ -3,8 +3,48 @@ session_start();
 require './includes/db.php';
 require './includes/product.php';
 
-$under500 = under500products();
-$offer = offeredProduct();
+$conn = new mysqli('localhost', 'root', '', 'lipstick');
+if ($conn->connect_error) {
+    exit("Connection failed: " . $conn->connect_error);
+}
+
+$under500Sql = "
+  SELECT 
+      lipsticks.*,
+      brands.name AS brand_name,
+      categories.name AS category_name,
+      GROUP_CONCAT(colors.name SEPARATOR ', ') AS color_names,
+      GROUP_CONCAT(colors.hex_code SEPARATOR ', ') AS color_hex_codes,
+      ROUND(AVG(reviews.rating), 1) AS average_rating
+  FROM lipsticks
+  JOIN brands ON lipsticks.brand_id = brands.id
+  JOIN categories ON lipsticks.category_id = categories.id
+  JOIN lipstick_colors ON lipsticks.id = lipstick_colors.lipstick_id
+  JOIN colors ON lipstick_colors.color_id = colors.id
+  LEFT JOIN reviews ON lipsticks.id = reviews.lipstick_id 
+  WHERE lipsticks.price < 500
+  GROUP BY lipsticks.id
+  LIMIT 5  
+";
+
+$offerSql = "
+  SELECT 
+      l.id, 
+      l.name, 
+      l.description,
+      l.image_url, 
+      l.price
+  FROM lipsticks l
+  WHERE l.id = 15
+  ";
+
+$under500Result = $conn->query($under500Sql);
+$under500 = $under500Result->fetch_all(MYSQLI_ASSOC);
+
+$offerResult = $conn->query($offerSql);
+$offer = $offerResult->fetch_all(MYSQLI_ASSOC)[0];
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

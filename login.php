@@ -2,10 +2,21 @@
 
 session_start();
 
-require './includes/db.php';
+$conn = new mysqli('localhost', 'root', '', 'lipstick');
+if ($conn->connect_error) {
+    exit("Connection failed: " . $conn->connect_error);
+}
+
 
 if(isset($_POST['login'])) {
-  $user = login($_POST['username'], md5($_POST['password']));
+
+  $username = $_POST['username'];
+  $password = md5($_POST['password']);
+
+  $sql = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
+  $result = $conn->query($sql);
+  $user = $result->fetch_assoc();
+
   if($user) {
     $_SESSION['user_id'] = $user['id'];
     $_SESSION['username'] = $user['username'];
@@ -13,11 +24,7 @@ if(isset($_POST['login'])) {
   } 
 }
 
-
-
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>

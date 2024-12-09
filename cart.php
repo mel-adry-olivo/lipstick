@@ -1,19 +1,27 @@
 <?php
 session_start();
-require './includes/db.php';
 require './includes/product.php';
+
+$conn = new mysqli('localhost', 'root', '', 'lipstick');
+if ($conn->connect_error) {
+    exit("Connection failed: " . $conn->connect_error);
+}
 
 if(isset($_POST['cart']) && isset($_SESSION['user_id'])) {
 
     $user_id = $_SESSION['user_id'];
     $product_id = $_POST['id'];
-    addCart($user_id, $product_id);
+    
+    $insertSql = "INSERT INTO user_cart (user_id, lipstick_id) VALUES ($user_id, $product_id)";
+    $conn->query($insertSql);
 }
 
 if(isset($_POST['delete']) && isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
     $product_id = $_POST['id'];
-    removeCart($user_id, $product_id);
+
+    $removeSql = "DELETE FROM user_cart WHERE user_id = $user_id AND lipstick_id = $product_id";
+    $conn->query($removeSql);
     header('Location: ./cart.php');
     exit();
 }
@@ -23,8 +31,32 @@ $total = 0;
 
 if(isset($_SESSION['user_id'])){
     $user_id = $_SESSION['user_id'];
-    $cartProducts = getCartProducts($user_id);
-    $total = getCartTotal($user_id)[0]['total'];
+
+    $cartSql = "
+    SELECT 
+      lipsticks.*,
+      brands.name AS brand_name,
+      GROUP_CONCAT(colors.name SEPARATOR ', ') AS color_names,
+      GROUP_CONCAT(colors.hex_code SEPARATOR ', ') AS color_hex_codes,
+      ROUND(AVG(reviews.rating), 1) AS average_rating
+    FROM user_cart
+    JOIN lipsticks ON user_cart.lipstick_id = lipsticks.id
+    JOIN brands ON lipsticks.brand_id = brands.id
+    JOIN lipstick_colors ON lipsticks.id = lipstick_colors.lipstick_id
+    JOIN colors ON lipstick_colors.color_id = colors.id
+    LEFT JOIN reviews ON lipsticks.id = reviews.lipstick_id
+    WHERE user_cart.user_id = $user_id 
+    GROUP BY lipsticks.id";
+
+    $cartRes = $conn->query($cartSql);
+    $cartProducts = $cartRes->fetch_all(MYSQLI_ASSOC);
+
+    $total = 0;
+
+    foreach($cartProducts as $product) {
+        $total += intval($product['price']);
+    }
+ 
 }
 
 ?>

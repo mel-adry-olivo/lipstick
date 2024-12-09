@@ -1,10 +1,36 @@
 <?php
 session_start();
-require './includes/db.php';
 require './includes/product.php';
 
-$allproducts = allproducts();
-$allbrands = allbrands();
+$conn = new mysqli('localhost', 'root', '', 'lipstick');
+if ($conn->connect_error) {
+    exit("Connection failed: " . $conn->connect_error);
+}
+
+$lipsticksSql = "
+  SELECT 
+      lipsticks.*,
+      brands.name AS brand_name,
+      categories.name AS category_name,
+      GROUP_CONCAT(colors.name SEPARATOR ', ') AS color_names,
+      GROUP_CONCAT(colors.hex_code SEPARATOR ', ') AS color_hex_codes,
+      ROUND(AVG(reviews.rating), 1) AS average_rating
+  FROM lipsticks
+  JOIN brands ON lipsticks.brand_id = brands.id
+  JOIN categories ON lipsticks.category_id = categories.id
+  JOIN lipstick_colors ON lipsticks.id = lipstick_colors.lipstick_id
+  JOIN colors ON lipstick_colors.color_id = colors.id
+  LEFT JOIN reviews ON lipsticks.id = reviews.lipstick_id 
+  GROUP BY lipsticks.id
+";
+
+$brandsSql = "SELECT * FROM brands";
+$brandsResult = $conn->query($brandsSql);
+
+$lipstickResult = $conn->query($lipsticksSql);
+$lipsticks = $lipstickResult->fetch_all(MYSQLI_ASSOC);
+
+$brands = $brandsResult->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -21,10 +47,7 @@ $allbrands = allbrands();
     <link rel="stylesheet" href="css/favorites.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
   </head>
   <body id="top">
     <?php include './includes/header.php'?>
@@ -34,7 +57,7 @@ $allbrands = allbrands();
           <div class="container">
             <h2 class="h2.1 section-title">Lipstick Brands</h2>
             <ul class="brands-list">
-              <?php foreach ($allbrands as $brand) { ?>
+              <?php foreach ($brands as $brand) { ?>
               <li class="brands-item">
                 <a href="./catalog-products.php?brand_name=<?php echo $brand['name']; ?>" class="brands-link">
                   <img
@@ -67,8 +90,8 @@ $allbrands = allbrands();
               </div>
             </div>
             <ul class="has-scrollbar has-scrollbar-disabled">
-              <?php foreach ($allproducts as $product) {
-                render_product($product);
+              <?php foreach ($lipsticks as $lipstick) {
+                render_product($lipstick);
               }?>
             </ul>
           </div>

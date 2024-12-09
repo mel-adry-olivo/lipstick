@@ -1,9 +1,41 @@
 <?php
 session_start();
-require './includes/db.php';
 require './includes/product.php';
 
-$collections = allCollections();
+$conn = new mysqli('localhost', 'root', '', 'lipstick');
+if ($conn->connect_error) {
+    exit("Connection failed: " . $conn->connect_error);
+}
+
+// get all lipsticks that are in a collection
+$collectionsSql = "
+  SELECT 
+      lipsticks.*,
+      brands.name AS brand_name,
+      categories.name AS category_name,
+      collections.name AS collection,
+      collections.id AS collection_id,
+      GROUP_CONCAT(colors.name SEPARATOR ', ') AS color_names,
+      GROUP_CONCAT(colors.hex_code SEPARATOR ', ') AS color_hex_codes,
+      ROUND(AVG(reviews.rating), 1) AS average_rating
+  FROM lipsticks
+  JOIN brands ON lipsticks.brand_id = brands.id
+  JOIN categories ON lipsticks.category_id = categories.id
+  JOIN lipstick_colors ON lipsticks.id = lipstick_colors.lipstick_id
+  JOIN colors ON lipstick_colors.color_id = colors.id
+  LEFT JOIN reviews ON lipsticks.id = reviews.lipstick_id 
+  JOIN collections ON lipsticks.collection_id = collections.id  
+  WHERE lipsticks.collection_id IN (1, 2, 3)
+  GROUP BY lipsticks.id
+";
+
+$collectionsResult = $conn->query($collectionsSql);
+$collections = [];
+
+// Group lipsticks by their collection ID
+while($collection = $collectionsResult->fetch_assoc()) {
+    $collections[$collection['collection_id']][] = $collection;
+}
 
 ?>
 

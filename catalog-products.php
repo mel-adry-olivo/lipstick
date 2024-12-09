@@ -1,18 +1,62 @@
 <?php
+
 session_start();
-require './includes/db.php';
 require './includes/product.php';
 
-$products = [];
+$conn = new mysqli('localhost', 'root', '', 'lipstick');
+if ($conn->connect_error) {
+    exit("Connection failed: " . $conn->connect_error);
+}
+
+$lipsticks = [];
 
 if(isset($_GET['brand_name'])) {
   $brand_name = $_GET['brand_name'] ?? '';
-  $products = allBrandProducts($brand_name);
+  $lipsticksByBrandSql = "
+  SELECT 
+      lipsticks.*,
+      brands.name AS brand_name,
+      categories.name AS category_name,
+      GROUP_CONCAT(colors.name SEPARATOR ', ') AS color_names,
+      GROUP_CONCAT(colors.hex_code SEPARATOR ', ') AS color_hex_codes,
+      ROUND(AVG(reviews.rating), 1) AS average_rating
+  FROM lipsticks
+  JOIN brands ON lipsticks.brand_id = brands.id
+  JOIN categories ON lipsticks.category_id = categories.id
+  JOIN lipstick_colors ON lipsticks.id = lipstick_colors.lipstick_id
+  JOIN colors ON lipstick_colors.color_id = colors.id
+  LEFT JOIN reviews ON lipsticks.id = reviews.lipstick_id 
+  WHERE brands.name = '$brand_name'
+  GROUP BY lipsticks.id
+  ORDER BY RAND()
+  ";
+
+  $result = $conn->query($lipsticksByBrandSql);
+  $lipsticks = $result->fetch_all(MYSQLI_ASSOC);
 }
 
 if(isset($_GET['category_name'])) {
   $categoryName = $_GET['category_name'] ?? '';
-  $products = allCategoryProducts($categoryName);
+  $lipsticksByCategorySql = "
+  SELECT 
+      lipsticks.*,
+      brands.name AS brand_name,
+      categories.name AS category_name,
+      GROUP_CONCAT(colors.name SEPARATOR ', ') AS color_names,
+      GROUP_CONCAT(colors.hex_code SEPARATOR ', ') AS color_hex_codes,
+      ROUND(AVG(reviews.rating), 1) AS average_rating
+  FROM lipsticks
+  JOIN brands ON lipsticks.brand_id = brands.id
+  JOIN categories ON lipsticks.category_id = categories.id
+  JOIN lipstick_colors ON lipsticks.id = lipstick_colors.lipstick_id
+  JOIN colors ON lipstick_colors.color_id = colors.id
+  LEFT JOIN reviews ON lipsticks.id = reviews.lipstick_id 
+  WHERE categories.name = '$categoryName'
+  GROUP BY lipsticks.id
+  ";
+
+  $result = $conn->query($lipsticksByCategorySql);
+  $lipsticks = $result->fetch_all(MYSQLI_ASSOC);
 }
 
 $title = isset($_GET['brand_name']) ?  $brand_name : $categoryName;
@@ -58,8 +102,8 @@ $title = ucfirst($title);
               </div>
             </div>
             <ul class="has-scrollbar has-scrollbar-disabled">
-              <?php foreach ($products as $product) {
-                render_product($product);
+              <?php foreach ($lipsticks as $lipstick) {
+                render_product($lipstick);
               }?>
             </ul>
           </div>

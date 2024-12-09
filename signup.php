@@ -5,7 +5,12 @@ session_start();
 require './includes/db.php';
 
 if(isset($_POST['signup'])) {
-  $success = signUp($_POST['username'], md5($_POST['password']));
+
+  $username = $_POST['username'];
+  $password = md5($_POST['password']);
+
+  $sql = "INSERT INTO users (username, password) VALUES ('$username', '$password')";  
+  $success =  $conn->query($sql);
   if($success) {
     header('Location: login.php');
   } else {

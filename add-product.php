@@ -1,15 +1,28 @@
 <?php
 session_start();
-require './includes/db.php';
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: ./login.php');
     exit();
 }
 
-$brands = allBrands();
-$categories = allCategories();
-$colors = allColors();
+$conn = new mysqli('localhost', 'root', '', 'lipstick');
+if ($conn->connect_error) {
+    exit("Connection failed: " . $conn->connect_error);
+}
+
+$brandsSql = "SELECT * FROM brands";
+$brandsResult = $conn->query($brandsSql);
+
+$categoriesSql = "SELECT * FROM categories";
+$categoriesResult = $conn->query($categoriesSql);
+
+$colorsSql = "SELECT * FROM colors";
+$colorsResult = $conn->query($colorsSql);
+
+$brands = $brandsResult->fetch_all(MYSQLI_ASSOC);
+$categories = $categoriesResult->fetch_all(MYSQLI_ASSOC);
+$colors = $colorsResult->fetch_all(MYSQLI_ASSOC);
 
 if (isset($_POST['add'])) {
     $name = $_POST['name'];
@@ -21,8 +34,16 @@ if (isset($_POST['add'])) {
     $selected_colors = $_POST['colors'];
 
 
-    $newId = addLipstick($name, $description, $price, $image_url, $brand_id, $category_id);
-    addLipstickColors($newId, $selected_colors);
+    $insertSql = "
+        INSERT INTO lipsticks (name, description, price, image_url, brand_id, category_id) 
+        VALUES ('$name', '$description', $price, '$image_url', $brand_id, $category_id)";
+    $conn->query($insertSql);
+    $newId = $conn->insert_id;
+    
+    foreach ($selected_colors as $color) {
+        $insertColorSql = "INSERT INTO lipstick_colors (lipstick_id, color_id) VALUES ($newId, $color)";
+        $conn->query($insertColorSql);
+    }
     
     header('Location: ./manage-products.php');
     exit();
