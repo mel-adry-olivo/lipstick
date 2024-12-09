@@ -247,8 +247,6 @@ $offer = offeredProduct();
       <ion-icon name="arrow-up" aria-hidden="true"></ion-icon>
     </a>
     <script src="js/script.js" defer></script>
-    <script src="js/add-cart.js" defer></script>
-    <script src="js/favorites.js" defer></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   </body>

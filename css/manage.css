@@ -1,0 +1,41 @@
+.product-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.product-table th,
+.product-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+}
+
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 600px;
+    width: 100%;
+}
+
+.edit-form .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-form .form-group label {
+    white-space: nowrap;
+}
+
+.edit-form .form-group :where(input, select, textarea) {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.form-actions {
+    display: flex;
+    gap: 16px;
+}

@@ -14,6 +14,8 @@ if(isset($_POST['delete']) && isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
     $product_id = $_POST['id'];
     removeCart($user_id, $product_id);
+    header('Location: ./cart.php');
+    exit();
 }
 
 $cart = [];
@@ -52,19 +54,6 @@ if(isset($_SESSION['user_id'])){
           <div class="container">
             <div class="title-wrapper">
               <h2 class="h2 section-title">Cart</h2>
-              <div class="sort-by">
-                <?php if(isset($_SESSION['user_id'])) : ?>
-                    <div class="sort-wrapper">
-                        <span>Sort by:</span>
-                            <select>
-                                <option value="price-asc">Price: Low to High</option>
-                                <option value="price-desc">Price: High to Low</option>
-                                <option value="name-asc">Name: A to Z</option>
-                                <option value="name-desc">Name: Z to A</option>
-                            </select>
-                        </div>
-                    </div>
-                <?php endif; ?>
             </div>
             <ul class="has-scrollbar has-scrollbar-disabled">
             <?php 
@@ -87,16 +76,13 @@ if(isset($_SESSION['user_id'])){
         <?php if(isset($_SESSION['user_id'])) :?>
             <form action="./reserve.php" method="post" class="reserve-form">
               <p>Total: $<?php echo $total; ?></p>
-              <button type="submit" class="btn btn-primary">Reserve</button>
+              <button type="submit" class="btn btn-primary" name="reserve">Reserve</button>
             </form>
           <?php endif; ?>
       </article>
     </main>
     <?php include './includes/footer.php'?>
     <script src="js/script.js" defer></script>
-    <script src="js/all-products.js" defer></script>
-    <script src="js/add-cart.js" defer></script>
-    <script src="js/favorites.js" defer></script>
     <script src="js/sort.js""></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
     ></script>

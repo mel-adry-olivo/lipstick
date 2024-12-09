@@ -74,6 +74,16 @@ CREATE TABLE user_cart (
   CONSTRAINT unique_user_lipstick_cart UNIQUE (user_id, lipstick_id)
 );
 
+CREATE TABLE user_reserves (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  user_id INT NOT NULL,
+  lipstick_id INT NOT NULL,
+  added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (lipstick_id) REFERENCES lipsticks(id) ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT unique_user_lipstick_cart UNIQUE (user_id, lipstick_id)
+)
+
 INSERT INTO brands (name, image_url)
 VALUES
   ('NARS', './images/nars-logo.png'),

@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
         this.classList.add('fa-eye');
       } else {
         this.classList.add('fa-eye-slash');
-        this.classList.remove('fa-eye'); // Open eye when password is hidden
+        this.classList.remove('fa-eye');
       }
     });
   }

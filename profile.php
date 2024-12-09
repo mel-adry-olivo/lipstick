@@ -10,9 +10,15 @@ if(isset($_POST['logout'])) {
   header('Location: ./index.php');
 }
 
+$isAdmin = false;
 
+if(isset($_SESSION['user_id'])) {
 
-
+  if($_SESSION['username'] === 'admin') {
+    $isAdmin = true;
+  }
+  
+}
 ?>
 
 <!DOCTYPE html>
@@ -36,8 +42,16 @@ if(isset($_POST['logout'])) {
     <?php include './includes/header.php'?>
     <main>
       <div class="login-container">
-        <h1>Logout</h1>
-        <form action="./logout.php" method="POST" id="login-form">
+        <h1>Profile</h1>
+        <?php if($isAdmin) : ?>
+        <form action="./manage-products.php">
+          <button type="submit">Manage Products</button>
+        </form>
+        <?php endif; ?>
+        <form action="./reserve.php" method="POST">
+          <button type="submit">Reservations</button>
+        </form>
+        <form action="./profile.php" method="POST" id="login-form">
           <button type="submit" name="logout">Logout</button>
         </form>
       </div>
@@ -45,8 +59,6 @@ if(isset($_POST['logout'])) {
     <?php include './includes/footer.php'?>
     <script src="js/script.js" defer></script>
     <script src="js/login.js" defer></script>
-    <script src="js/add-cart.js" defer></script>
-    <script src="js/favorites.js" defer></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   </body>

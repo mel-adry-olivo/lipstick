@@ -1,12 +1,8 @@
 # TODO
 
-1. Add reserved page -
-2. Reserve products from cart
-3. Add comments/reviews
-
-Manage Products
-<> - Product Categories
-<> - Rating
-<> - Review / Comment
-<> - User Login
-Reservation
+Done - Manage Products
+Done - Product Categories
+Done - Rating
+Done - Review / Comment
+Done - User Login
+Done - Reservation

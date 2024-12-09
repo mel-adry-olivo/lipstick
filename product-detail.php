@@ -5,19 +5,30 @@ require './includes/db.php';
 require './includes/product.php';
 
 if(isset($_GET['id'])) {
-  $id = $_GET['id'];
-  $product = productById($id);
+	$id = $_GET['id'];
+	$product = productById($id);
 }
 
 if(isset($_POST['submit-review']) && isset($_SESSION['user_id'])) {
-  $user_id = $_SESSION['user_id'];
-  $product_id = $product['id'];
-  $rating = $_POST['rating'];
-  $review = $_POST['review-text'];
+	$user_id = $_SESSION['user_id'];
+	$product_id = $product['id'];
+	$rating = $_POST['rating'];
+	$review = $_POST['review-text'];
 
-  addReview($product_id,$user_id, $rating, $review);
-  header('Location: ./product-detail.php?id=' . $product_id);
-  exit();
+	addReview($product_id,$user_id, $rating, $review);
+	header('Location: ./product-detail.php?id=' . $product_id);
+	exit();
+}
+
+if(isset($_POST['delete-review']) && isset($_SESSION['user_id'])) {
+	$user_id = $_SESSION['user_id'];
+	$product_id = $product['id'];
+	$review_id = $_POST['review-id'];
+
+
+	deleteReview($review_id);
+	header('Location: ./product-detail.php?id=' . $product_id);
+	exit();
 }
 
 
@@ -61,27 +72,44 @@ $reviews = allReviews($product['id']);
             <div id="color-options">
             </div>
           </div>
-          <button class="add-to-cart-btn">Add to Cart</button>
+		  <form action="./cart.php" method="POST">
+			<input type="hidden" name="id" value="<?php echo $product['id']; ?>">
+			<button class="add-to-cart-btn" name="cart" type="submit">
+				Add to cart
+			</button>
+		  </form>
         </div>
       </section>
       <section class="reviews" id="reviews">
         <h3>Customer Reviews</h3>
-        <div id="reviews-container">
-          <?php foreach ($reviews as $review) : ?>
-          <div class="review-item">
-          <div class="review-rating">
-            <?php
-              for ($i = 1; $i <= $review['rating']; $i++) {
-                  echo '★';
-              }
-              for ($i = $review['rating'] + 1; $i <= 5; $i++) {
-                  echo '☆'; 
-              }
-              ?>
-          </div>
-            <p><strong><?php echo $review['username']; ?>:</strong> <?php echo $review['review_text']; ?></p>
-          </div>
-          <?php endforeach; ?>
+        <div id="reviews-container">		
+          <?php if(!empty($reviews)) : ?>
+            <?php foreach ($reviews as $review) : ?>
+				<div class="review-item">
+					<div class="text-wrapper">
+						<div class="review-rating">
+							<?php
+							for ($i = 1; $i <= $review['rating']; $i++) {
+								echo '★';
+							}
+							for ($i = $review['rating'] + 1; $i <= 5; $i++) {
+								echo '☆'; 
+							}
+							?>
+						</div>
+						<p class="review-text"><strong><?php echo $review['username']; ?>:</strong> <?php echo $review['review_text']; ?></p>
+					</div>
+					<?php if(isset($_SESSION['user_id']) && $_SESSION['user_id'] == $review['user_id']) : ?>
+						<form action="./product-detail.php?id=<?php echo $product['id']; ?>" method="POST" onsubmit="return confirm('Are you sure you want to delete this review?')">
+							<input type="hidden" name="review-id" value="<?php echo $review['id']; ?>">
+							<button name="delete-review" >Delete Review</button>
+						</form>
+					<?php endif; ?>
+          		</div>
+          	<?php endforeach; ?>
+          <?php else : ?>
+            <p>No reviews yet.</p>
+          <?php endif; ?>
         </div>
         <h4>Add a Review</h4>
         <form action="./product-detail.php?id=<?php echo $product['id']; ?>" id="review-form" method="POST">
@@ -118,9 +146,6 @@ $reviews = allReviews($product['id']);
     </main>
     <?php include './includes/footer.php'?>
     <script src="js/script.js" defer></script>
-    <script src="js/product-details.js" defer></script>
-    <script src="js/add-cart.js" defer></script>
-    <script src="js/favorites.js" defer></script>
     <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" type="module"></script>
     <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js" nomodule></script>
   </body>

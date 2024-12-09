@@ -1,6 +1,9 @@
 <?php
 
-
+$cartTotal = 0;
+if(isset($_SESSION['user_id'])) {
+  $cartTotal = cartTotal($_SESSION['user_id']);
+}
 
 ?>
 
@@ -31,19 +34,17 @@
             </a>
             <div class="header-actions">
               <p><?php echo isset($_SESSION['user_id']) ?  'Hello, ' . $_SESSION['username'] : '';?></p>
-                <a href="<?php echo isset($_SESSION['user_id']) ? './logout.php' : './login.php'; ?> ">
+                <a href="<?php echo isset($_SESSION['user_id']) ? './profile.php' : './login.php'; ?> ">
                     <button class="header-action-btn" aria-label="user">
                     <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
                     </button>
                 </a>
                 <a href="./favorites.php" class="header-action-btn" id="favourites-icon" aria-label="favourite item">
                     <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    <!-- <span class="btn-badge">0</span> -->
                 </a>
                 <a href="./cart.php" class="header-action-btn" id="cart-icon" aria-label="cart item">
-                    <data class="btn-text" value="0">$0.00</data>
+                    <data class="btn-text" value="0">₱<?php echo $cartTotal ? $cartTotal : '0.00'; ?></data>
                     <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
-                    <!-- <span class="btn-badge">0</span> -->
                 </a>
             </div>
         </div>

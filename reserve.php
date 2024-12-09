@@ -3,25 +3,23 @@ session_start();
 require './includes/db.php';
 require './includes/product.php';
 
-if(isset($_POST['favorites']) && isset($_SESSION['user_id'])) {
+if(isset($_POST['reserve']) && isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
-    $product_id = $_POST['id'];
-    addFavorites($user_id, $product_id);
+    reserve($user_id);
 }
 
 if(isset($_POST['delete']) && isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
     $product_id = $_POST['id'];
-    removeFavorite($user_id, $product_id);
+    removeReserve($user_id, $product_id);
+    header('Location: ./reserve.php');
+    exit();
 }
-
-$favorites = [];
 
 if(isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
-    $favorites = getFavorites($user_id);
+    $reserves = getReserves($_SESSION['user_id']);
 }
-    
+
 ?>
 
 <!DOCTYPE html>
@@ -48,24 +46,23 @@ if(isset($_SESSION['user_id'])) {
         <section class="section shop" id="all-products" data-section>
           <div class="container">
             <div class="title-wrapper">
-              <h2 class="h2 section-title">Favorites</h2>
+              <h2 class="h2 section-title">Reservations</h2>
             </div>
             <ul class="has-scrollbar has-scrollbar-disabled">
-            <?php 
-
-                if(isset($_SESSION['user_id'])) {
-                    if(count($favorites) > 0) {
-                        foreach($favorites as $favorite) {
-                                render_product($favorite);
+                <?php 
+                    if(isset($_SESSION['user_id'])) {
+                        if(count($reserves) > 0) {
+                            foreach($reserves as $pd) {
+                                    render_product($pd);
+                            }
+                            
+                        } else {
+                            echo '<p class="no-products">You have no reservations yet.</p>';
                         }
                     } else {
-                        echo '<p class="no-products">You have no favorites yet.</p>';
+                        echo '<p class="no-products">You need to login first.</p>';
                     }
-                } else {
-                    echo '<p class="no-products">You need to login first.</p>';
-                }
-              
-              ?>
+                ?>
             </ul>
           </div>
         </section>
@@ -73,6 +70,9 @@ if(isset($_SESSION['user_id'])) {
     </main>
     <?php include './includes/footer.php'?>
     <script src="js/script.js" defer></script>
+    <script src="js/all-products.js" defer></script>
+    <script src="js/add-cart.js" defer></script>
+    <script src="js/favorites.js" defer></script>
     <script src="js/sort.js""></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
     ></script>
