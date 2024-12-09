@@ -2,8 +2,6 @@
 
 session_start();
 
-require './includes/db.php';
-
 if(isset($_POST['logout'])) {
   session_unset();
   session_destroy();
@@ -11,7 +9,6 @@ if(isset($_POST['logout'])) {
 }
 
 $isAdmin = false;
-
 if(isset($_SESSION['user_id'])) {
 
   if($_SESSION['username'] === 'admin') {

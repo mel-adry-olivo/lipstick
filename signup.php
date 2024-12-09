@@ -2,7 +2,6 @@
 
 session_start();
 
-require './includes/db.php';
 
 if(isset($_POST['signup'])) {
 

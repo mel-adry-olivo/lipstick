@@ -1,99 +1,98 @@
-/* General Styles */
 .about-us,
 .our-story,
 .stores,
 .join-us {
-  padding: 100px 0;
-  text-align: center; /* Centered text for all sections */
+    padding: 100px 0;
+    text-align: center; /* Centered text for all sections */
 }
 
 .section-title {
-  /* Added a general selector for all section titles */
-  margin-bottom: 20px;
-  color: #fc6c85; /* Dark Pink */
-  font-size: 2.5rem; /* Adjust font size for uniformity */
-  font-weight: 700; /* Bold */
+    /* Added a general selector for all section titles */
+    margin-bottom: 20px;
+    color: #fc6c85; /* Dark Pink */
+    font-size: 2.5rem; /* Adjust font size for uniformity */
+    font-weight: 700; /* Bold */
 }
 
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 15px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
 }
 
 /* About Us Section */
 .about-us {
-  background-color: #ffffff; /* Soft pink */
+    background-color: #ffffff; /* Soft pink */
 }
 
 /* Our Story Section */
 .our-story {
-  background-color: #ffe6f2; /* White */
+    background-color: #ffe6f2; /* White */
 }
 
 /* Stores Section */
 .stores {
-  background-color: #ffffff; /* Soft pink */
+    background-color: #ffffff; /* Soft pink */
 }
 
 .stores ul {
-  list-style: none;
-  padding: 0;
+    list-style: none;
+    padding: 0;
 }
 
 .stores li {
-  font-size: 18px;
-  margin-bottom: 15px;
+    font-size: 18px;
+    margin-bottom: 15px;
 }
 
 .stores a {
-  text-decoration: none;
-  color: #fc6c85;
-  font-weight: bold;
+    text-decoration: none;
+    color: #fc6c85;
+    font-weight: bold;
 }
 
 .stores ul li strong {
-  font-weight: bold;
-  color: #333;
+    font-weight: bold;
+    color: #333;
 }
 
 .stores ul li:hover strong {
-  color: #fc6c85; /* Dark Pink on hover */
+    color: #fc6c85; /* Dark Pink on hover */
 }
 
 /* Join Us Section */
 .join-us {
-  background-color: #ffe6f2; /* White */
+    background-color: #ffe6f2; /* White */
 }
 
 .join-us p {
-  font-size: 20px;
-  color: #555;
+    font-size: 20px;
+    color: #555;
 }
 
 .join-us .btn {
-  background-color: #fc6c85;
-  color: #fff;
-  padding: 12px 30px;
-  border-radius: 5px;
-  text-decoration: none;
-  transition: background-color 0.3s ease;
+    background-color: #fc6c85;
+    color: #fff;
+    padding: 12px 30px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
 }
 
 .join-us .btn:hover {
-  background-color: #ff85a1; /* Lighter pink hover effect */
+    background-color: #ff85a1; /* Lighter pink hover effect */
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .section-title {
-    font-size: 2rem; /* Adjusted font size for mobile */
-  }
+    .section-title {
+        font-size: 2rem; /* Adjusted font size for mobile */
+    }
 
-  .about-us,
-  .our-story,
-  .stores,
-  .join-us {
-    padding: 50px 15px; /* Responsive padding */
-  }
+    .about-us,
+    .our-story,
+    .stores,
+    .join-us {
+        padding: 50px 15px; /* Responsive padding */
+    }
 }

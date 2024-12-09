@@ -166,9 +166,17 @@ if (isset($_POST['update'])) {
                         <div class="form-group">
                             <label for="colors">Colors (hold ctrl for multiple selection)</label>
                             <select id="colors" name="colors[]" multiple required>
-                                <?php foreach ($colors as $color): ?>
-                                    <option value="<?php echo $color['id']; ?>"<?php echo in_array($color['id'], $currentColorIds) ? 'selected' : ''; ?>>
-                                        <?php echo $color['name']; ?> (<?php echo $color['hex_code']; ?>)
+                                <?php foreach ($colors as $color): 
+                                        $colorName = $color['name'];
+                                        $colorId = $color['id'];
+                                        $hexCode = $color['hex_code'];
+
+                                        $isSelected = in_array($color['id'], $currentColorIds) ? 'selected' : '';
+                                        $optionText = "$colorName ($hexCode)" ;
+
+                                    ?>
+                                    <option value="<?php echo $color['id']; ?>" <?php echo $isSelected; ?>>
+                                        <?php echo $optionText; ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>

@@ -1,6 +1,5 @@
 <?php
 session_start();
-require './includes/db.php';
 require './includes/product.php';
 
 if(!isset($_SESSION['user_id'])) {
