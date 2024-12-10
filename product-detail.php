@@ -144,6 +144,18 @@ $reviews = $reviewsResult->fetch_all(MYSQLI_ASSOC);
           <div class="available-colors">
             <h4>Available Colors:</h4>
             <div id="color-options">
+             <?php
+              $color_names = explode(', ', $lipstick['color_names']);
+              $color_hex_codes = explode(', ', $lipstick['color_hex_codes']);
+
+              foreach ($color_names as $index => $color_name) :
+                  $hex_code = isset($color_hex_codes[$index]) ? $color_hex_codes[$index] : '#000000';
+              ?>
+                  <div class="color-swatch-container">
+                      <span class="color-swatch" style="background-color: <?php echo $hex_code; ?>" aria-label="<?php echo $color_name; ?>"></span>
+                      <span class="color-tooltip"><?php echo $color_name; ?></span>
+                  </div>
+              <?php endforeach; ?>
             </div>
           </div>
 		  <form action="./cart.php" method="POST">

@@ -2,6 +2,11 @@
 
 session_start();
 
+$conn = new mysqli('localhost', 'root', '', 'lipstick');
+if ($conn->connect_error) {
+    exit("Connection failed: " . $conn->connect_error);
+}
+
 
 if(isset($_POST['signup'])) {
 
@@ -10,6 +15,7 @@ if(isset($_POST['signup'])) {
 
   $sql = "INSERT INTO users (username, password) VALUES ('$username', '$password')";  
   $success =  $conn->query($sql);
+
   if($success) {
     header('Location: login.php');
   } else {

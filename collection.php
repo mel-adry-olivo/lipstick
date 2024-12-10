@@ -70,7 +70,7 @@ while($collection = $collectionsResult->fetch_assoc()) {
           </a>
         </div>
         <?php foreach($collections as $collectionKey => $collection) : ?>
-          <h2 class="h2 section-title"><?php echo $collection[0]['collection'] ?></h2>
+          <h2 class="h2 section-title" id="collection<?php echo $collectionKey ?>"><?php echo $collection[0]['collection'] ?></h2>
           <ul class="has-scrollbar">
           <?php foreach($collection as $product) : ?>
             <?php render_product($product); ?>

@@ -61,7 +61,7 @@ main {
     margin-block-end: 10px;
 }
 
-.product-details .color-options {
+.product-details #color-options {
     display: flex;
     gap: 10px;
 }

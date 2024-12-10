@@ -167,7 +167,7 @@ $offer = $offerResult->fetch_all(MYSQLI_ASSOC)[0];
               <div class="banner-card banner-card-1 has-before hover:shine">
                 <p class="card-subtitle">New Collection</p>
                 <h2 class="h2 card-title">Discover Our Yves Saint Laurent (YSL) Rouge Pur Couture Collection</h2>
-                <a href="./catalog-products.php?brand_id=3" id="shopNowButton3" class="btn btn-secondary">Explore More</a>
+                <a href="./collection.php" id="shopNowButton3" class="btn btn-secondary">Explore More</a>
                 <div class="has-bg-image" style="background-image: url('images/banner-1.jpg')"></div>
               </div>
             </li>
